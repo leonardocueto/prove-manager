@@ -10,10 +10,23 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   parserOptions: {
-    ecmaVersion: 2020,
+    parser: "@typescript-eslint/parser",
   },
   rules: {
+    quotes: ["error", "double"],
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "vue/multi-word-component-names": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "vue/component-name-in-template-casing": [
+      "error",
+      "kebab-case",
+      {
+        registeredComponentsOnly: false,
+        ignores: [],
+      },
+    ],
+    "linebreak-style": ["error", "unix"],
   },
 };

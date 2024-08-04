@@ -1,30 +1,26 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <component :is="layout">
+    <router-view />
+  </component>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts" setup>
+import { computed, defineAsyncComponent } from "vue";
+import { useRoute } from "vue-router";
 
-nav {
-  padding: 30px;
-}
+const DefaultLayout = defineAsyncComponent(
+  () => import("./layouts/DefaultLayout.vue")
+);
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+const BlankLayout = defineAsyncComponent(
+  () => import("./layouts/BlankLayout.vue")
+);
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+const route = useRoute();
+
+const layout = computed(() => {
+  return route.meta.layout == "BlankLayout" ? BlankLayout : DefaultLayout;
+});
+</script>
+
+<style lang="scss"></style>
