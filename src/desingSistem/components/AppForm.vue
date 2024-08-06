@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form class="w-full" @submit.prevent="handleSubmit">
     <slot />
   </form>
 </template>

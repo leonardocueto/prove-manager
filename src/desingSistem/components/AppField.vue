@@ -9,10 +9,9 @@
       </div>
 
       <input
+        v-model="dataInput"
         :type="type"
         :id="id"
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
         :placeholder="placeholder"
         class="pl-10 py-1 px-2 rounded-lg border-2 text-base w-full focus:border-orange-200"
       />
@@ -20,9 +19,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, ref, watch } from "vue";
 // Linea 8 sale error, por que?
-defineProps<{
+const props = defineProps<{
   label: string;
   id?: string;
   type: string;
@@ -30,7 +29,20 @@ defineProps<{
   placeholder: string;
 }>();
 
-defineEmits<{
+const dataInput = ref(props.modelValue);
+
+const emit = defineEmits<{
   (e: "update:modelValue", value: string): void;
 }>();
+
+watch(dataInput, (value) => {
+  emit("update:modelValue", value);
+});
+
+watch(
+  () => props.modelValue,
+  (value) => {
+    dataInput.value = value;
+  }
+);
 </script>
