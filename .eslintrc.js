@@ -28,5 +28,17 @@ module.exports = {
       },
     ],
     "linebreak-style": ["error", "unix"],
+    "prettier/prettier": [
+      "warn",
+      {
+        semi: true,
+        singleQuote: false,
+        trailingComma: "es5",
+        printWidth: 80,
+        tabWidth: 2,
+        arrowParens: "always",
+        endOfLine: "lf",
+      },
+    ],
   },
 };
