@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center h-screen bg-bg-login-gradient">
-    <div class="flex p-6 shadow-md w-3/6 h-4/6 rounded-2xl bg-white">
+    <div class="flex p-6 shadow-md w-3/6 rounded-2xl bg-white">
       <div class="flex-1 bg-bg-login-start rounded-xl p-2">logo</div>
       <div class="flex-1 bg-white p-2 flex flex-col">
         <div class="flex mt-2 justify-end">
