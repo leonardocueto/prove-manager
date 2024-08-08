@@ -9,6 +9,8 @@ module.exports = {
       },
       backgroundImage: {
         "bg-login-gradient": "linear-gradient(to right, #FFE8E0, #FFD7D5)",
+        "bg-default-login-gradient":
+          "linear-gradient(to right, #fff, ##ECEFF0)",
       },
     },
   },

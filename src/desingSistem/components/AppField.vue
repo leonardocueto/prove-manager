@@ -5,7 +5,7 @@
       <div
         class="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"
       >
-        <slot name="icon" />
+        <component :is="iconComponent" />
       </div>
 
       <input
@@ -27,6 +27,9 @@ const props = defineProps<{
   type: string;
   modelValue: string;
   placeholder: string;
+  iconComponent: {
+    type: object;
+  };
 }>();
 
 const dataInput = ref(props.modelValue);

@@ -3,11 +3,9 @@
     <div class="flex p-6 shadow-lg w-3/6 h-4/6 rounded-2xl bg-white">
       <div class="flex-1 bg-bg-login-start rounded-xl p-2">logo</div>
       <div class="flex-1 bg-white p-2 flex flex-col">
-        <div class="flex mt-2 justify-end">
-          <icon-cross width="30px" height="30px" />
-        </div>
-
-        <div class="flex flex-col items-center justify-start gap-5 h-full px-4">
+        <div
+          class="flex flex-col items-center justify-start gap-10 h-full px-4"
+        >
           <h1 class="text-3xl font-bold py-4">Login</h1>
           <app-form @submit="handleSubmit">
             <app-field
@@ -16,10 +14,8 @@
               type="text"
               v-model="form.username"
               placeholder="Ingresar usuario"
+              :iconComponent="IconMail"
             >
-              <template #icon>
-                <icon-mail height="20px" width="20px" />
-              </template>
             </app-field>
             <app-field
               id="password"
@@ -27,15 +23,16 @@
               type="password"
               v-model="form.password"
               placeholder="Ingresar password"
+              :iconComponent="IconEye"
             >
-              <template #icon>
-                <icon-eye height="20px" width="20px" />
-              </template>
             </app-field>
             <dir class="text-right text-orange-500 underline">
               <a href="">Forgot Password?</a>
             </dir>
-            <app-button> Log in </app-button>
+            <app-button class="flex items-center justify-center">
+              <icon-spin v-if="loading" />
+              <span v-else>Log in </span>
+            </app-button>
           </app-form>
 
           <app-line />
@@ -55,7 +52,9 @@
           <div>
             <p class="text-xs font-semibold">
               Don't have an account?
-              <span class="text-gray-600 underline">Sign Up here</span>
+              <span class="text-gray-600 underline hover:cursor-pointer"
+                >Sign Up here</span
+              >
             </p>
           </div>
         </div>
@@ -66,8 +65,12 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { useAuth } from "@/composables";
+// import { IconMail, IconEye } from "@tabler/icons-vue";
+
+//consultar por que no funciona el :iconComponent eye de tabler icon y si el componente de vue
+
 import {
-  IconCross,
   AppForm,
   AppField,
   AppButton,
@@ -78,15 +81,29 @@ import {
   IconFacebook,
   IconEye,
   IconMail,
+  IconSpin,
 } from "@/desingSistem";
+import router from "@/router";
 
+const { doLogin } = useAuth();
+
+const loading = ref(false);
 const form = ref({
-  username: "",
+  username: "leocueto1999+1@gmail.com",
   password: "",
 });
 
-const handleSubmit = () => {
-  console.log("form:", form.value);
+const handleSubmit = async () => {
+  try {
+    loading.value = true;
+    console.log(form.value.username);
+    await doLogin(form.value.username);
+    router.push({ name: "home" });
+  } catch (error) {
+    throw new Error("Error doLogin");
+  } finally {
+    loading.value = false;
+  }
 };
 </script>
 
