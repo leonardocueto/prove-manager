@@ -5,7 +5,7 @@
       <div
         class="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"
       >
-        <component :is="iconComponent" />
+        <component :is="IconComponentLeft" size="25"></component>
       </div>
 
       <input
@@ -19,7 +19,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, defineEmits, ref, watch } from "vue";
+import { defineProps, defineEmits, ref, watch, computed } from "vue";
+import * as TablerIcons from "@tabler/icons-vue";
 // Linea 8 sale error, por que?
 const props = defineProps<{
   label: string;
@@ -27,12 +28,14 @@ const props = defineProps<{
   type: string;
   modelValue: string;
   placeholder: string;
-  iconComponent: {
-    type: object;
-  };
+  iconLeft?: string;
 }>();
 
 const dataInput = ref(props.modelValue);
+
+const IconComponentLeft = computed(() => {
+  return TablerIcons[props.iconLeft as keyof typeof TablerIcons] || null;
+});
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: string): void;

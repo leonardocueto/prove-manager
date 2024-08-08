@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center h-screen bg-bg-login-gradient">
-    <div class="flex p-6 shadow-lg w-3/6 h-4/6 rounded-2xl bg-white">
+    <div class="flex p-6 shadow-lg w-3/6 rounded-2xl bg-white">
       <div class="flex-1 bg-bg-login-start rounded-xl p-2">logo</div>
       <div class="flex-1 bg-white p-2 flex flex-col">
         <div
@@ -9,21 +9,21 @@
           <h1 class="text-3xl font-bold py-4">Login</h1>
           <app-form @submit="handleSubmit">
             <app-field
+              v-model="form.username"
               id="username"
               label="Email"
               type="text"
-              v-model="form.username"
               placeholder="Ingresar usuario"
-              :iconComponent="IconMail"
+              icon-left="IconMail"
             >
             </app-field>
             <app-field
+              v-model="form.password"
               id="password"
               label="Password"
               type="password"
-              v-model="form.password"
               placeholder="Ingresar password"
-              :iconComponent="IconEye"
+              icon-left="IconEye"
             >
             </app-field>
             <dir class="text-right text-orange-500 underline">
@@ -66,9 +66,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useAuth } from "@/composables";
-// import { IconMail, IconEye } from "@tabler/icons-vue";
-
-//consultar por que no funciona el :iconComponent eye de tabler icon y si el componente de vue
+// import axios from "@/utils/axios";
 
 import {
   AppForm,
@@ -79,11 +77,8 @@ import {
   IconApple,
   IconGoogle,
   IconFacebook,
-  IconEye,
-  IconMail,
   IconSpin,
 } from "@/desingSistem";
-import router from "@/router";
 
 const { doLogin } = useAuth();
 
@@ -94,16 +89,20 @@ const form = ref({
 });
 
 const handleSubmit = async () => {
-  try {
-    loading.value = true;
-    console.log(form.value.username);
-    await doLogin(form.value.username);
-    router.push({ name: "home" });
-  } catch (error) {
-    throw new Error("Error doLogin");
-  } finally {
-    loading.value = false;
-  }
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Basic bGVvY3VldG8xOTk5KzFAZ21haWwuY29tOmEwZTgzYjQwNmIwYTZlNzZiMTdk"
+  );
+
+  fetch("https://api.alegra.com/api/v1/sellers", {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  })
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
 };
 </script>
 
