@@ -1,34 +1,53 @@
 <template>
-  <app-aside>
+  <app-aside :hide="showMenu">
     <template #icon>
-      <icon-brand-tinder :size="30" color="white" stroke-width="3" />
-      <p>Desplegar</p>
-    </template>
-
-    <template #option>
-      <app-option-aside text="Dashboard" :iconComponent="IconHome" size="30">
-      </app-option-aside>
-      <app-option-aside
-        text="Post"
-        :iconComponent="IconFileDescription"
-        size="30"
+      <div
+        class="flex justify-between items-center gap-2 w-full p-1 rounded-md bg-blue-200"
       >
-      </app-option-aside>
-      <app-option-aside text="Test" :iconComponent="IconSticker" size="30">
-      </app-option-aside>
+        <icon-brand-tinder
+          :size="30"
+          color="white"
+          stroke-width="3"
+          class="bg-blue-200"
+        />
+        <icon-menu-2
+          :size="30"
+          color="white"
+          stroke-width="3"
+          class="rounded-lg cursor-pointer hover:bg-blue-400 p-1"
+          @click="toggleMenu"
+        />
+      </div>
+    </template>
+    <template #option>
+      <div class="flex flex-col gap-1 w-full">
+        <app-option-aside
+          v-for="option in options"
+          :key="option.text"
+          :text="option.text"
+          :size="option.size"
+          :iconComponent="option.icon"
+          :hide="showMenu"
+        />
+      </div>
     </template>
   </app-aside>
 </template>
 <script lang="ts" setup>
-import {
-  IconBrandTinder,
-  IconHome,
-  IconFileDescription,
-  IconSticker,
-} from "@tabler/icons-vue";
+import { IconBrandTinder, IconMenu2 } from "@tabler/icons-vue";
 import { AppAside, AppOptionAside } from "@/desingSistem";
-//nota
-// falta componetizar, el aside solamente deberia tener un slot
-//y todo lo que este internamente tambien
-//utilizar sidebarcomponent exactamente igual que LoginView
+import { ref } from "vue";
+
+const options = [
+  { text: "Dashboard", icon: "IconHome", size: 25 },
+  { text: "Post", icon: "IconClipboard", size: 25 },
+  { text: "test", icon: "IconSticker", size: 25 },
+];
+
+const showMenu = ref(true);
+
+const toggleMenu = () => {
+  console.log("se presiono");
+  showMenu.value = !showMenu.value;
+};
 </script>

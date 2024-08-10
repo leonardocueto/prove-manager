@@ -8,7 +8,7 @@ export default function () {
       return resp.status;
     } catch (error) {
       clearToken();
-      throw new Error("Error al iniciar sesión");
+      throw new Error("Error al iniciar sesion");
     }
   };
   const doLogout = () => {

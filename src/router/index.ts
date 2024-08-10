@@ -23,12 +23,12 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem("token-access");
+  const token = localStorage.getItem("token-ac");
 
   //Private routes
   if (token) {
     if (to.name == "Login") {
-      next({ name: "Dashboard" });
+      next({ name: "home" });
     } else {
       next();
     }

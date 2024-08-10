@@ -21,7 +21,6 @@
 <script lang="ts" setup>
 import { defineProps, defineEmits, ref, watch, computed } from "vue";
 import * as TablerIcons from "@tabler/icons-vue";
-// Linea 8 sale error, por que?
 const props = defineProps<{
   label: string;
   id?: string;

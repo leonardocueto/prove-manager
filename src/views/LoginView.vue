@@ -65,8 +65,10 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useAuth } from "@/composables";
-// import axios from "@/utils/axios";
+
+const router = useRouter();
 
 import {
   AppForm,
@@ -89,20 +91,16 @@ const form = ref({
 });
 
 const handleSubmit = async () => {
-  const myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    "Basic bGVvY3VldG8xOTk5KzFAZ21haWwuY29tOmEwZTgzYjQwNmIwYTZlNzZiMTdk"
-  );
-
-  fetch("https://api.alegra.com/api/v1/sellers", {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
-  })
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+  try {
+    loading.value = true;
+    await doLogin(form.value.username);
+    router.push({ name: "home" });
+  } catch (error) {
+    console.error("Error durante el login:", error);
+    throw new Error("Error en el login");
+  } finally {
+    loading.value = false;
+  }
 };
 </script>
 
