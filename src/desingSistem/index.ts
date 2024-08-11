@@ -13,6 +13,9 @@ import AppIconButton from "./components/AppIconButton.vue";
 import AppBoxICon from "./components/AppBoxICon.vue";
 import AppAside from "./components/AppAside.vue";
 import AppOptionAside from "./components/AppOptionAside.vue";
+import AppProfileAside from "./components/AppProfileAside.vue";
+import AppLangSwitch from "./components/AppLangSwitch.vue";
+import AppSearchTopbar from "./components/AppSearchTopbar.vue";
 
 export {
   IconSpin,
@@ -30,4 +33,7 @@ export {
   AppIconButton,
   AppAside,
   AppOptionAside,
+  AppProfileAside,
+  AppLangSwitch,
+  AppSearchTopbar,
 };

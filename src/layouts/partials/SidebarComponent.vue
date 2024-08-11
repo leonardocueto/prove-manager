@@ -31,23 +31,29 @@
         />
       </div>
     </template>
+    <template #profile>
+      <app-profile-aside
+        name="Leonardo Cueto"
+        job="Developer frontend"
+        :hide="showMenu"
+      />
+    </template>
   </app-aside>
 </template>
 <script lang="ts" setup>
 import { IconBrandTinder, IconMenu2 } from "@tabler/icons-vue";
-import { AppAside, AppOptionAside } from "@/desingSistem";
+import { AppAside, AppOptionAside, AppProfileAside } from "@/desingSistem";
 import { ref } from "vue";
 
 const options = [
-  { text: "Dashboard", icon: "IconHome", size: 25 },
-  { text: "Post", icon: "IconClipboard", size: 25 },
+  { text: "dashboard", icon: "IconHome", size: 25 },
+  { text: "post", icon: "IconClipboard", size: 25 },
   { text: "test", icon: "IconSticker", size: 25 },
 ];
 
 const showMenu = ref(true);
 
 const toggleMenu = () => {
-  console.log("se presiono");
   showMenu.value = !showMenu.value;
 };
 </script>

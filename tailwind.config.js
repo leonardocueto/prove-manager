@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         "bg-login-start": "#FFE8E0",
         "bg-login-end": "#FFD7D5",
+        "bg-d-layout": "#ECEFEA",
       },
       backgroundImage: {
         "bg-login-gradient": "linear-gradient(to right, #FFE8E0, #FFD7D5)",

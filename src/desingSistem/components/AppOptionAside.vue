@@ -1,10 +1,10 @@
 <template>
   <div
-    class="flex items-center justify-start gap-2 rounded-md w-full px-2 py-2 hover:shadow-md hover:bg-blue-200 hover:cursor-pointer hover:font-semibold"
+    class="flex items-center justify-start gap-2 rounded-md w-full px-2 py-2 hover:shadow-md hover:bg-gray-100 hover:cursor-pointer hover:font-semibold"
   >
     <component :is="iconComponentLeft" :size="size" />
     <template v-if="hide">
-      <p>{{ text }}</p>
+      <p>{{ $t(`${text}`) }}</p>
     </template>
   </div>
 </template>
