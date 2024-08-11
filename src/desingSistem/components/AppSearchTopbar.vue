@@ -8,13 +8,12 @@
 
     <input
       type="text"
-      placeholder="Search..."
+      :placeholder="$t(`search`)"
       class="pl-10 py-1 px-2 rounded-lg border-2 text-base w-full focus:border-orange-200"
     />
   </div>
 </template>
 <script setup lang="ts">
 import TablerIcons from "@/assets/icons";
-
 const iconComponent = TablerIcons["IconSearch"];
 </script>

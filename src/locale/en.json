@@ -2,5 +2,17 @@
   "dashboard": "Dashboard",
   "post": "Post",
   "test": "Test",
-  "home": "Home"
+  "home": "Home",
+  "don't have an account?": "Don't have an account?",
+  "sign Up here": "Sign Up here",
+  "or Continue With": "Or Continue With",
+  "log in": "Log in",
+  "forgot password?": "Forgot Password?",
+  "enter password": "Enter Password",
+  "password": "Password",
+  "enter email": "Enter Email",
+  "email": "Email",
+  "login": "Login",
+  "logout": "Logout",
+  "search": "Search..."
 }

@@ -2,5 +2,17 @@
   "dashboard": "Tablero",
   "post": "Posteo",
   "test": "Prueba",
-  "home": "Casa"
+  "home": "Casa",
+  "don't have an account?": "¿No tiene cuenta?",
+  "sign Up here": "Inscríbase aquí",
+  "or Continue With": "O Continuar con",
+  "log in": "Iniciar sesión",
+  "forgot password?": "¿Ha olvidado su contraseña?",
+  "enter password": "Introducir contraseña",
+  "password": "Contraseña",
+  "enter email": "Introducir correo electrónico",
+  "email": "Correo electrónico",
+  "login": "Iniciar sesión",
+  "logout": "Cerrar sesión",
+  "search": "Buscar..."
 }

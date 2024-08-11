@@ -6,32 +6,32 @@
         <div
           class="flex flex-col items-center justify-start gap-10 h-full px-4"
         >
-          <h1 class="text-3xl font-bold py-4">Login</h1>
+          <h1 class="text-3xl font-bold py-4">{{ $t("login") }}</h1>
           <app-form @submit="handleSubmit">
             <app-field
               v-model="form.username"
               id="username"
-              label="Email"
+              label="email"
               type="text"
-              placeholder="Ingresar usuario"
+              placeholder="enter email"
               icon-left="IconMail"
             >
             </app-field>
             <app-field
               v-model="form.password"
               id="password"
-              label="Password"
+              label="password"
               type="password"
-              placeholder="Ingresar password"
+              placeholder="enter password"
               icon-left="IconEye"
             >
             </app-field>
             <dir class="text-right text-orange-500 underline">
-              <a href="">Forgot Password?</a>
+              <a href="">{{ $t("forgot password?") }}</a>
             </dir>
             <app-button class="flex items-center justify-center">
               <icon-spin v-if="loading" />
-              <span v-else>Log in </span>
+              <span v-else>{{ $t("log in") }} </span>
             </app-button>
           </app-form>
 
@@ -51,10 +51,10 @@
           </div>
           <div>
             <p class="text-xs font-semibold">
-              Don't have an account?
-              <span class="text-gray-600 underline hover:cursor-pointer"
-                >Sign Up here</span
-              >
+              {{ $t(`don't have an account?`) }}
+              <span class="text-gray-600 underline hover:cursor-pointer">{{
+                $t(`sign Up here`)
+              }}</span>
             </p>
           </div>
         </div>

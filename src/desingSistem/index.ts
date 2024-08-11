@@ -16,6 +16,7 @@ import AppOptionAside from "./components/AppOptionAside.vue";
 import AppProfileAside from "./components/AppProfileAside.vue";
 import AppLangSwitch from "./components/AppLangSwitch.vue";
 import AppSearchTopbar from "./components/AppSearchTopbar.vue";
+import AppLogout from "./components/AppLogout.vue";
 
 export {
   IconSpin,
@@ -36,4 +37,5 @@ export {
   AppProfileAside,
   AppLangSwitch,
   AppSearchTopbar,
+  AppLogout,
 };
