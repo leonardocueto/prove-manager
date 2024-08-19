@@ -20,6 +20,6 @@ const { doLogout } = useAuth();
 
 const SetLogout = () => {
   doLogout();
-  router.push({ name: "Login" });
+  router.push({ name: "login" });
 };
 </script>

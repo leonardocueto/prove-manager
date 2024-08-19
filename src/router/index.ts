@@ -5,14 +5,26 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: HomeView,
+    meta: {
+      layout: "DefaultLayout",
+    },
   },
   {
     path: "/login",
-    name: "Login",
+    name: "login",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/LoginView.vue"),
     meta: {
       layout: "BlankLayout",
+    },
+  },
+  {
+    path: "/client",
+    name: "client",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/ClientView.vue"),
+    meta: {
+      layout: "DefaultLayout",
     },
   },
 ];
@@ -27,7 +39,7 @@ router.beforeEach((to, from, next) => {
 
   //Private routes
   if (token) {
-    if (to.name == "Login") {
+    if (to.name == "login") {
       next({ name: "home" });
     } else {
       next();
@@ -37,7 +49,7 @@ router.beforeEach((to, from, next) => {
     if (to.meta.layout) {
       next();
     } else {
-      next({ name: "Login" });
+      next({ name: "login" });
     }
   }
 });

@@ -8,7 +8,7 @@ import EN from "@/locale/en.json";
 
 const i18n = createI18n({
   legacy: false,
-  locale: localStorage.getItem("language") ?? "ES",
+  locale: localStorage.getItem("language") ?? "EN",
   messages: {
     ES: ES,
     EN: EN,

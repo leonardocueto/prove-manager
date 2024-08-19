@@ -27,11 +27,11 @@ withDefaults(
 }
 
 .d-button .primary {
-  @apply bg-[#FF797B];
+  @apply bg-primary;
 }
 
 .d-button .secondary {
-  @apply bg-[#ad5153];
+  @apply bg-primary-active;
 }
 
 .d-button .danger {

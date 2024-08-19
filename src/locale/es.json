@@ -14,5 +14,9 @@
   "email": "Correo electrónico",
   "login": "Iniciar sesión",
   "logout": "Cerrar sesión",
-  "search": "Buscar..."
+  "search": "Buscar...",
+  "client": "Clientes",
+  "name": "Nombre",
+  "city": "Ciudad",
+  "mail": "Correo"
 }

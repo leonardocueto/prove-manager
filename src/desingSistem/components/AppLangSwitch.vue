@@ -1,5 +1,5 @@
 <template>
-  <div ref="dropdown" class="relative inline-block text-left">
+  <div ref="dropdown" class="relative inline-block text-left z-10">
     <button
       @click="toggle"
       class="hover:bg-blue-300 hover:shadow-sm p-2 rounded"

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-12 bg-blue-200 justify-between items-center px-4">
+  <div class="flex h-12 bg-white justify-between items-center px-4 border-b-2">
     <app-search-topbar />
 
     <div class="flex gap-2">

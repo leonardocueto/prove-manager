@@ -14,5 +14,9 @@
   "email": "Email",
   "login": "Login",
   "logout": "Logout",
-  "search": "Search..."
+  "search": "Search...",
+  "client": "Clients",
+  "name": "Name",
+  "city": "City",
+  "mail": "Email"
 }

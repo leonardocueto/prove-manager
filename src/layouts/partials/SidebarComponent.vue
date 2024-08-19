@@ -1,23 +1,17 @@
 <template>
   <app-aside :hide="showMenu">
     <template #icon>
-      <div
-        class="flex justify-between items-center gap-2 w-full p-1 rounded-md bg-blue-200"
-      >
-        <icon-brand-tinder
+      <transition>
+        <component
+          :is="iconComponentMenu"
+          :key="iconComponentMenu"
           :size="30"
           color="white"
           stroke-width="3"
-          class="bg-blue-200"
-        />
-        <icon-menu-2
-          :size="30"
-          color="white"
-          stroke-width="3"
-          class="rounded-lg cursor-pointer hover:bg-blue-400 p-1"
+          class="rounded-lg cursor-pointer bg-gray-500 hover:bg-gray-400 p-1"
           @click="toggleMenu"
         />
-      </div>
+      </transition>
     </template>
     <template #option>
       <div class="flex flex-col gap-1 w-full">
@@ -26,6 +20,7 @@
           :key="option.text"
           :text="option.text"
           :size="option.size"
+          :link="option.link"
           :iconComponent="option.icon"
           :hide="showMenu"
         />
@@ -41,19 +36,41 @@
   </app-aside>
 </template>
 <script lang="ts" setup>
-import { IconBrandTinder, IconMenu2 } from "@tabler/icons-vue";
+import { computed, ref } from "vue";
 import { AppAside, AppOptionAside, AppProfileAside } from "@/desingSistem";
-import { ref } from "vue";
+import TablerIcons from "@/assets/icons";
+
+const iconComponentMenu = computed(() =>
+  showMenu.value
+    ? TablerIcons["IconArrowBarToLeft"]
+    : TablerIcons["IconArrowBarToRight"]
+);
 
 const options = [
-  { text: "dashboard", icon: "IconHome", size: 25 },
-  { text: "post", icon: "IconClipboard", size: 25 },
-  { text: "test", icon: "IconSticker", size: 25 },
+  { text: "dashboard", link: "home", icon: "IconHome", size: 25 },
+  { text: "client", link: "client", icon: "IconUser", size: 25 },
+  { text: "test", link: "", icon: "IconSticker", size: 25 },
 ];
 
 const showMenu = ref(true);
 
 const toggleMenu = () => {
   showMenu.value = !showMenu.value;
+  showMenu.value;
 };
 </script>
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.8s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.v-leave-active {
+  position: absolute;
+}
+</style>

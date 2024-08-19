@@ -1,5 +1,5 @@
 <template>
-  <div class="flex max-h-screen overflow-hidden bg-bg-d-layout">
+  <div class="flex max-h-screen overflow-hidden bg-terceary">
     <sidebar-component></sidebar-component>
     <div class="w-full">
       <topbar-component />

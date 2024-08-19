@@ -1,4 +1,6 @@
 <template>
-  <h1>{{ $t("home") }}</h1>
+  <app-topbar-view title="dashboard" />
 </template>
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { AppTopbarView } from "@/desingSistem";
+</script>
