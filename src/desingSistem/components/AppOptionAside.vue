@@ -1,17 +1,20 @@
 <template>
-  <router-link
-    class="flex items-center justify-start gap-2 rounded-md w-full px-2 py-2 hover:shadow-md hover:bg-gray-100 hover:cursor-pointer hover:font-semibold"
-    :to="{ name: link }"
+  <div
+    class="w-full px-2 hover:cursor-pointer hover:font-semibold"
+    :class="hide ? 'justify-start' : ' justify-center'"
   >
-    <component :is="iconComponentLeft" :size="size" />
-    <transition>
-      <p v-if="hide">{{ $t(`${text}`) }}</p>
-    </transition>
-  </router-link>
+    <router-link :to="{ name: link }" class="flex gap-2 px-1">
+      <component :is="iconComponentLeft" :size="size" :color="active" />
+      <transition>
+        <p v-if="hide">{{ $t(`${text}`) }}</p>
+      </transition>
+    </router-link>
+  </div>
 </template>
 <script lang="ts" setup>
 import { computed, defineProps } from "vue";
 import TablerIcons from "@/assets/icons";
+import { useRoute } from "vue-router";
 const props = defineProps<{
   text: string;
   iconComponent?: string;
@@ -22,6 +25,11 @@ const props = defineProps<{
 
 const iconComponentLeft = computed(() => {
   return TablerIcons[props.iconComponent as keyof typeof TablerIcons] || null;
+});
+
+const route = useRoute();
+const active = computed(() => {
+  return route.name === props.link ? "#2482F7" : "gray";
 });
 </script>
 <style scoped>
@@ -35,5 +43,11 @@ const iconComponentLeft = computed(() => {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+
+.router-link-active {
+  @apply font-bold;
+  @apply border-b-2;
+  @apply border-primary;
 }
 </style>

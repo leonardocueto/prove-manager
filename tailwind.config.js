@@ -8,9 +8,9 @@ module.exports = {
         "bg-login-end": "#FFD7D5",
         "bg-d-layout": "#ECEFEA",
         "primary-active": "#3E4685",
-        primary: "#169BD6",
-        secondary: "#d2d5df",
-        terceary: "#F5F8FC",
+        primary: "#2482F7",
+        secondary: "#FAFBFF",
+        third: "#F5F8FC",
       },
       backgroundImage: {
         "bg-login-gradient": "linear-gradient(to right, #FFE8E0, #FFD7D5)",

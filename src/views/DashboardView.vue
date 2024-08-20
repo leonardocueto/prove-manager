@@ -1,5 +1,5 @@
 <template>
-  <app-topbar-view title="dashboard" />
+  <h1>hola mundo</h1>
 </template>
 <script lang="ts" setup>
 import { AppTopbarView } from "@/desingSistem";

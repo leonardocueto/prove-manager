@@ -1,12 +1,10 @@
 <template>
   <aside
-    class="flex flex-col gap-8 px-2 py-8 items-start justify-between h-screen bg-white rounded-r-lg transition-all duration-300 border-r-2"
+    class="flex flex-col gap-8 px-2 py-8 justify-between h-screen bg-secondary transition-all duration-300 border-r"
     :style="{ width: tamaño }"
   >
     <div class="flex flex-col w-full gap-6">
-      <div class="flex justify-start items-center w-full p-1 rounded-md">
-        <slot name="icon" />
-      </div>
+      <slot name="icon" />
 
       <slot name="option" />
     </div>

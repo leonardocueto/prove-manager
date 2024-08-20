@@ -2,13 +2,14 @@
   <div ref="dropdown" class="relative inline-block text-left z-10">
     <button
       @click="toggle"
-      class="hover:bg-blue-300 hover:shadow-sm p-2 rounded"
+      class="p-2 rounded flex gap-2 items-center px-4 py-2"
     >
       <component :is="iconComponent" :size="30" color="black" />
+      {{ $t("language") }}
     </button>
     <ul
       v-if="isOpen"
-      class="absolute right-0 w-48 bg-white border border-gray-300 rounded shadow-lg"
+      class="absolute right-32 w-48 bg-white border border-gray-300 rounded shadow-lg"
     >
       <li
         class="px-4 py-2 hover:bg-gray-100 cursor-pointer"

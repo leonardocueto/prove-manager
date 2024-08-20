@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import DashboardView from "../views/DashboardView.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    name: "dashboard",
+    component: DashboardView,
     meta: {
       layout: "DefaultLayout",
     },
@@ -40,7 +40,7 @@ router.beforeEach((to, from, next) => {
   //Private routes
   if (token) {
     if (to.name == "login") {
-      next({ name: "home" });
+      next({ name: "dashboard" });
     } else {
       next();
     }

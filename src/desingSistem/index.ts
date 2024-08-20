@@ -17,7 +17,6 @@ import AppProfileAside from "./components/AppProfileAside.vue";
 import AppLangSwitch from "./components/AppLangSwitch.vue";
 import AppSearchTopbar from "./components/AppSearchTopbar.vue";
 import AppLogout from "./components/AppLogout.vue";
-import AppTopbarView from "./components/AppTopbarView.vue";
 import AppModalRight from "./components/AppModalRight.vue";
 import AppUpdateRight from "./components/AppUpdateRight.vue";
 import AppTable from "./components/AppTable.vue";
@@ -42,7 +41,6 @@ export {
   AppLangSwitch,
   AppSearchTopbar,
   AppLogout,
-  AppTopbarView,
   AppModalRight,
   AppUpdateRight,
   AppTable,

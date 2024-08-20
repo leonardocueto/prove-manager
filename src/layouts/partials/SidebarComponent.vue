@@ -8,13 +8,13 @@
           :size="30"
           color="white"
           stroke-width="3"
-          class="rounded-lg cursor-pointer bg-gray-500 hover:bg-gray-400 p-1"
+          class="rounded-lg cursor-pointer bg-gray-500 hover:bg-gray-400 p-1 ml-2"
           @click="toggleMenu"
         />
       </transition>
     </template>
     <template #option>
-      <div class="flex flex-col gap-1 w-full">
+      <div class="flex flex-col gap-2 w-full">
         <app-option-aside
           v-for="option in options"
           :key="option.text"
@@ -47,9 +47,8 @@ const iconComponentMenu = computed(() =>
 );
 
 const options = [
-  { text: "dashboard", link: "home", icon: "IconHome", size: 25 },
+  { text: "dashboard", link: "dashboard", icon: "IconHome", size: 25 },
   { text: "client", link: "client", icon: "IconUser", size: 25 },
-  { text: "test", link: "", icon: "IconSticker", size: 25 },
 ];
 
 const showMenu = ref(true);

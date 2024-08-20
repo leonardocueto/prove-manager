@@ -29,7 +29,7 @@
             >
             </app-field>
             <dir class="text-right">
-              <a class="text-secondary underline hover:text-primary" href="">{{
+              <a class="text-gray-300 underline hover:text-primary" href="">{{
                 $t("forgot password?")
               }}</a>
             </dir>
@@ -98,7 +98,7 @@ const handleSubmit = async () => {
   try {
     loading.value = true;
     await doLogin(form.value.username);
-    router.push({ name: "home" });
+    router.push({ name: "dashboard" });
   } catch (error) {
     console.error("Error durante el login:", error);
     throw new Error("Error en el login");

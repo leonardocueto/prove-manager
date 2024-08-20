@@ -18,5 +18,6 @@
   "client": "Clients",
   "name": "Name",
   "city": "City",
-  "mail": "Email"
+  "mail": "Email",
+  "language": "Language"
 }
