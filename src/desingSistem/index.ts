@@ -15,11 +15,12 @@ import AppAside from "./components/AppAside.vue";
 import AppOptionAside from "./components/AppOptionAside.vue";
 import AppProfileAside from "./components/AppProfileAside.vue";
 import AppLangSwitch from "./components/AppLangSwitch.vue";
-import AppSearchTopbar from "./components/AppSearchTopbar.vue";
 import AppLogout from "./components/AppLogout.vue";
-import AppModalRight from "./components/AppModalRight.vue";
+import AppButtonModal from "./components/AppButtonModal.vue";
 import AppUpdateRight from "./components/AppUpdateRight.vue";
 import AppTable from "./components/AppTable.vue";
+import AppButtonAdd from "./components/AppButtonAdd.vue";
+import AppFadeModal from "./components/AppFadeModal.vue";
 
 export {
   IconSpin,
@@ -39,9 +40,10 @@ export {
   AppOptionAside,
   AppProfileAside,
   AppLangSwitch,
-  AppSearchTopbar,
   AppLogout,
-  AppModalRight,
   AppUpdateRight,
   AppTable,
+  AppButtonModal,
+  AppButtonAdd,
+  AppFadeModal,
 };

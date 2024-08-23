@@ -31,4 +31,4 @@ axios.interceptors.response.use(
   }
 );
 
-export { axios, setToken, clearToken };
+export { axios, setToken, clearToken, alegraToken };

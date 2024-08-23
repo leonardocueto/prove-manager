@@ -15,9 +15,15 @@
   "login": "Login",
   "logout": "Logout",
   "search": "Search...",
-  "client": "Clients",
+  "providers": "Providers",
   "name": "Name",
   "city": "City",
   "mail": "Email",
-  "language": "Language"
+  "language": "Language",
+  "options": "Options",
+  "phone": "Phone",
+  "ivaCondition": "IVA",
+  "status": "Status",
+  "edit": "Edit",
+  "delete": "Delete"
 }

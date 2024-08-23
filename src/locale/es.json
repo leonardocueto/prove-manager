@@ -15,9 +15,15 @@
   "login": "Iniciar sesión",
   "logout": "Cerrar sesión",
   "search": "Buscar...",
-  "client": "Clientes",
+  "providers": "Proveedores",
   "name": "Nombre",
   "city": "Ciudad",
   "mail": "Correo",
-  "language": "Idioma"
+  "language": "Idioma",
+  "options": "Opciones",
+  "phone": "Teléfono",
+  "ivaCondition": "IVA",
+  "status": "Estado",
+  "edit": "Editar",
+  "delete": "Eliminar"
 }

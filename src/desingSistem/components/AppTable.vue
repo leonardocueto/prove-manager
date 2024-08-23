@@ -1,40 +1,31 @@
 <template>
   <div class="w-full">
     <div class="border m-6 rounded-lg">
-      <div class="w-full bg-white">
-        <h2 class="mt-7 ml-6 font-semibold">Listado</h2>
+      <div class="flex items-center justify-between w-full bg-white">
+        <h2 class="py-5 px-6 font-semibold text-lg">Listado</h2>
+        <div class="flex items-center w-30 max-h-full">
+          <app-button-add @click="addUser"> Crear cliente </app-button-add>
+        </div>
+        <app-fade-modal :isVisible="isCreateModalOpen">
+          <div class="bg-white">
+            <p>test</p>
+          </div>
+        </app-fade-modal>
       </div>
       <div
-        class="flex items-center justify-start w-full py-4 font-bold text-xl px-2 text-gray-600"
+        class="flex items-center justify-start w-full py-4 px-6 text-xs text-gray-600 bg-third"
       >
-        <p class="flex grow gap-2 items-center">
-          {{ $t("name") }}
+        <p
+          v-for="header in headers"
+          class="flex gap-2 grow items-center"
+          :key="header.title"
+        >
+          {{ $t(`${header.title}`) }}
+
           <component
             :is="iconRight"
-            :key="iconRight"
-            :size="25"
-            color="grey"
-            stroke-width="3"
-            class="rounded-lg cursor-pointer p-1"
-          />
-        </p>
-        <p class="flex gap-2 grow items-center">
-          {{ $t("mail") }}
-          <component
-            :is="iconRight"
-            :key="iconRight"
-            :size="25"
-            color="grey"
-            stroke-width="3"
-            class="rounded-lg cursor-pointer p-1"
-          />
-        </p>
-        <p class="flex gap-2 grow items-center">
-          {{ $t("city") }}
-          <component
-            :is="iconRight"
-            :key="iconRight"
-            :size="25"
+            :key="header.title"
+            :size="22"
             color="grey"
             stroke-width="3"
             class="rounded-lg cursor-pointer p-1"
@@ -47,12 +38,28 @@
             <tr
               v-for="(data, index) in client"
               :key="index"
-              class="cursor-pointer hover:bg-slate-300 border-t"
+              class="border-t"
               @click="emitToggleModal"
             >
-              <td class="w-1/3 text-left py-3 px-2">{{ data.nombre }}</td>
-              <td class="w-1/3 text-left py-3 px-2">{{ data.email }}</td>
-              <td class="w-1/3 text-left py-3 px-2">{{ data.ciudad }}</td>
+              <td class="w-1/3 text-left py-3 px-5 grow">{{ data.nombre }}</td>
+              <td class="w-1/3 text-left py-3 grow">{{ data.email }}</td>
+              <td class="w-1/3 text-left py-3 pl-3 grow">{{ data.ciudad }}</td>
+              <td class="pr-2">
+                <app-button-modal>
+                  <template #top>
+                    <div class="flex gap-2 relative z-10">
+                      <component :is="iconEdit" size="20" color="#2482F7" />
+                      {{ $t("edit") }}
+                    </div>
+                  </template>
+                  <template #down>
+                    <div class="flex gap-2 relative z-10">
+                      <component :is="iconDelete" size="20" color="red" />
+                      {{ $t("delete") }}
+                    </div>
+                  </template>
+                </app-button-modal>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -61,17 +68,42 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, ref } from "vue";
+import { AppButtonModal, AppButtonAdd, AppFadeModal } from "@/desingSistem";
+import getProviders from "@/composables/useProviders";
 import TablerIcons from "@/assets/icons";
+const isCreateModalOpen = ref(false);
+
+const addUser = async () => {
+  try {
+    const providers = await getProviders();
+    console.log(providers);
+  } catch (error) {
+    console.error("Error al obtener proveedores:", error);
+  }
+};
+const headers: { title: string }[] = [
+  { title: "name" },
+  { title: "mail" },
+  { title: "city" },
+  { title: "phone" },
+  { title: "ivaCondition" },
+  { title: "status" },
+];
 
 const iconRight = TablerIcons["IconArrowsSort"];
+const iconEdit = TablerIcons["IconPencil"];
+const iconDelete = TablerIcons["IconTrash"];
 interface Persona {
   nombre: string;
   email: string;
   ciudad: string;
+  phonePrimary: string;
+  status: string;
+  ivaCondition: string;
 }
 
-const props = defineProps<{
+defineProps<{
   client: Array<Persona>;
 }>();
 

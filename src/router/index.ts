@@ -19,8 +19,8 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: "/client",
-    name: "client",
+    path: "/providers",
+    name: "providers",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/ClientView.vue"),
     meta: {

@@ -10,13 +10,11 @@
         color="white"
         class="border rounded-md bg-[#169bd6] hover:bg-[#3E4685] focus:border-[#169bd6] m-2 cursor-pointer"
       />
-      <app-search-topbar />
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { defineProps } from "vue";
-import { AppSearchTopbar } from "@/desingSistem";
 import TablerIcons from "@/assets/icons";
 
 const iconAdd = TablerIcons["IconPlus"];

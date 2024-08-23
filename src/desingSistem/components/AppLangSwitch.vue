@@ -1,10 +1,7 @@
 <template>
-  <div ref="dropdown" class="relative inline-block text-left z-10">
-    <button
-      @click="toggle"
-      class="p-2 rounded flex gap-2 items-center px-4 py-2"
-    >
-      <component :is="iconComponent" :size="30" color="black" />
+  <div ref="dropdown" class="relative inline-block text-left z-10 w-full">
+    <button @click="toggle" class="w-full rounded flex gap-2 items-center p-2">
+      <component :is="iconComponent" :size="20" color="gray" />
       {{ $t("language") }}
     </button>
     <ul

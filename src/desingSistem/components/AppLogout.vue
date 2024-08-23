@@ -3,7 +3,7 @@
     @click="SetLogout"
     class="flex items-center space-x-2 p-2 rounded cursor-pointer"
   >
-    <component :is="iconComponent" size="25"></component>
+    <component :is="iconComponent" size="20" color="gray"></component>
     <span>{{ $t("logout") }}</span>
   </div>
 </template>

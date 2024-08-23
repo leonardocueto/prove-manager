@@ -48,7 +48,7 @@ const iconComponentMenu = computed(() =>
 
 const options = [
   { text: "dashboard", link: "dashboard", icon: "IconHome", size: 25 },
-  { text: "client", link: "client", icon: "IconUser", size: 25 },
+  { text: "providers", link: "providers", icon: "IconUser", size: 25 },
 ];
 
 const showMenu = ref(true);
