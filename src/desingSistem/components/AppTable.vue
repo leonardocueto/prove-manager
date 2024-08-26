@@ -36,7 +36,7 @@
         <table class="w-full">
           <tbody>
             <tr
-              v-for="(data, index) in client"
+              v-for="(data, index) in items"
               :key="index"
               class="border-t"
               @click="emitToggleModal"
@@ -71,9 +71,25 @@
 import { defineProps, defineEmits, ref } from "vue";
 import { AppButtonModal, AppButtonAdd, AppFadeModal } from "@/desingSistem";
 import TablerIcons from "@/assets/icons";
-const isCreateModalOpen = ref(false);
-import getProviders from "@/composables/useProviders";
+import useProviders from "@/composables/useProviders";
 
+interface Persona {
+  nombre: string;
+  email: string;
+  ciudad: string;
+  phonePrimary: string;
+  status: string;
+  ivaCondition: string;
+}
+
+defineProps<{
+  items: Array<Persona>;
+}>();
+
+const emit = defineEmits(["toggleModal"]);
+const { getProviders } = useProviders();
+
+const isCreateModalOpen = ref(false);
 const addUser = async () => {
   await getProviders();
 };
@@ -89,20 +105,6 @@ const headers: { title: string }[] = [
 const iconRight = TablerIcons["IconArrowsSort"];
 const iconEdit = TablerIcons["IconPencil"];
 const iconDelete = TablerIcons["IconTrash"];
-interface Persona {
-  nombre: string;
-  email: string;
-  ciudad: string;
-  phonePrimary: string;
-  status: string;
-  ivaCondition: string;
-}
-
-defineProps<{
-  client: Array<Persona>;
-}>();
-
-const emit = defineEmits(["toggleModal"]);
 
 const emitToggleModal = () => {
   emit("toggleModal");

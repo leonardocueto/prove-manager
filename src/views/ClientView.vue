@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full h-full bg-white">
     <div class="flex">
-      <app-table :client="personas" :modalShow="modalShow" />
+      <app-table :items="personas" :modalShow="modalShow" />
     </div>
   </div>
 </template>

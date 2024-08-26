@@ -1,4 +1,4 @@
-import { axios, clearToken } from "@/utils/axios";
+import { axios } from "@/utils/axios";
 
 export default function () {
   const getProviders = async () => {
@@ -9,7 +9,6 @@ export default function () {
       console.log("Datos recibidos:", resp.data);
     } catch (error) {
       console.error("Error en la petición:", error);
-      clearToken();
       throw new Error("Error en la petición");
     }
   };
