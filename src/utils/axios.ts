@@ -16,8 +16,7 @@ const clearToken = () => {
 
 axios.interceptors.response.use(
   function (response) {
-    //buscar bien para que es
-
+    //cualquier codigo dentro del rango 200 causa la ejecución
     return response;
   },
   function (error) {

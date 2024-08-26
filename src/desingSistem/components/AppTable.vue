@@ -70,17 +70,12 @@
 <script lang="ts" setup>
 import { defineProps, defineEmits, ref } from "vue";
 import { AppButtonModal, AppButtonAdd, AppFadeModal } from "@/desingSistem";
-import getProviders from "@/composables/useProviders";
 import TablerIcons from "@/assets/icons";
 const isCreateModalOpen = ref(false);
+import getProviders from "@/composables/useProviders";
 
 const addUser = async () => {
-  try {
-    const providers = await getProviders();
-    console.log(providers);
-  } catch (error) {
-    console.error("Error al obtener proveedores:", error);
-  }
+  await getProviders();
 };
 const headers: { title: string }[] = [
   { title: "name" },
