@@ -6,7 +6,7 @@
           {{ $t("list provider") }}
         </h2>
         <div class="flex items-center w-30 max-h-full">
-          <app-button-add @click="isCreateModalOpen = true">{{
+          <app-button-add @click="openModal">{{
             $t("add provider")
           }}</app-button-add>
         </div>
@@ -42,17 +42,14 @@
                 <template #top>
                   <div
                     class="flex gap-2 relative z-20"
-                    @click="updateModalForm(slotProps.data.id)"
+                    @click="openModal({ id: slotProps.data.id })"
                   >
                     <component :is="iconEdit" size="20" color="gray" />
                     {{ $t("edit") }}
                   </div>
                 </template>
                 <template #down>
-                  <div
-                    class="flex gap-2 relative z-20"
-                    @click="deleteProvider(slotProps.data.id)"
-                  >
+                  <div class="flex gap-2 relative z-20">
                     <component :is="iconDelete" size="20" color="gray" />
                     {{ $t("delete") }}
                   </div>
@@ -62,116 +59,77 @@
           </column>
         </datatable>
       </main>
+
       <!--Create Provider Modal-->
-      <app-fade-modal :isVisible="isCreateModalOpen">
+      <app-fade-modal :isVisible="showModal">
         <div class="bg-white min-w-[500px] min-h-96 rounded-2xl p-6">
           <div class="pb-4">
             <h1 class="font-bold text-2xl">{{ $t("add provider") }}</h1>
+
+            <provider-form
+              :values="formValues"
+              @close="closeModal"
+              @submit="onSubmit"
+            ></provider-form>
           </div>
-          <app-form @submit="handleSubmit(formValues)">
-            <app-field
-              v-model="formValues.name"
-              id="Name"
-              label="name"
-              type="text"
-              placeholder="enter name"
-            />
-            <app-field
-              v-model="formValues.email"
-              id="mail"
-              label="mail"
-              type="text"
-              placeholder="enter mail"
-            />
-            <app-field
-              v-model="formValues.city"
-              id="city"
-              label="city"
-              type="text"
-              placeholder="enter city"
-            />
-            <div class="flex gap-2">
-              <app-button type="secondary" @click="isCreateModalOpen = false"
-                >salir</app-button
-              >
-              <app-button type="primary">Aceptar</app-button>
-            </div>
-          </app-form>
         </div>
       </app-fade-modal>
       <!---->
-
-      <!-- Update Provider Modal -->
-      <app-fade-modal :isVisible="isUpdateModalOpen">
-        <div class="bg-white min-w-[500px] min-h-96 rounded-2xl p-6">
-          <div class="pb-4">
-            <h1 class="font-bold text-2xl">{{ $t("edit provider") }}</h1>
-          </div>
-          <app-form @submit="handleUpdateValues(selectedProvider)">
-            <app-field
-              v-model="selectedProvider.name"
-              id="Name"
-              label="name"
-              type="text"
-              placeholder="enter name"
-            />
-            <app-field
-              v-model="selectedProvider.email"
-              id="mail"
-              label="mail"
-              type="text"
-              placeholder="enter mail"
-            />
-            <app-field
-              v-model="selectedProvider.city"
-              id="city"
-              label="city"
-              type="text"
-              placeholder="enter city"
-            />
-            <div class="flex gap-2">
-              <app-button type="secondary" @click="isUpdateModalOpen = false"
-                >salir</app-button
-              >
-              <app-button type="primary">Aceptar</app-button>
-            </div>
-          </app-form>
-        </div>
-      </app-fade-modal>
-      <!-- -->
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { onMounted, ref } from "vue";
 import TablerIcons from "@/assets/icons";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import {
-  AppButtonModal,
-  AppButtonAdd,
-  AppFadeModal,
-  AppForm,
-  AppButton,
-  AppField,
-} from "@/desingSistem";
+import ProviderForm from "@/components/Forms/ProviderForm.vue";
+import { AppButtonModal, AppButtonAdd, AppFadeModal } from "@/desingSistem";
 import useProviders from "@/composables/useProviders";
 
-const {
-  getProviders,
-  listProviders,
-  handleSubmit,
-  formValues,
-  isCreateModalOpen,
-  deleteProvider,
-  isUpdateModalOpen,
-  updateModalForm,
-  selectedProvider,
-  handleUpdateValues,
-} = useProviders();
+const { listProviders, findProvider } = useProviders();
 
 const iconEdit = TablerIcons["IconPencil"];
 const iconDelete = TablerIcons["IconTrash"];
 const datatable = DataTable;
 const column = Column;
+
+const showModal = ref<boolean>(false);
+// const loading = ref<boolean>(false);
+const isEdit = ref<boolean>(false);
+const formValues = ref({
+  name: "",
+  email: "",
+  city: "",
+});
+
+// onMounted(async () => {
+//   try {
+//     loading.value = true;
+//     await getProviders();
+//   } catch (error) {
+//   } finally {
+//     loading.value = false;
+//   }
+// });
+
+const onSubmit = (value: any) => {
+  console.log(value);
+};
+
+const openModal = ({ id }: { id?: string | number }) => {
+  isEdit.value = id ? true : false;
+  if (id) formValues.value = findProvider(id);
+  showModal.value = true;
+};
+
+const closeModal = () => {
+  showModal.value = false;
+  formValues.value = {
+    name: "",
+    email: "",
+    city: "",
+  };
+};
 </script>

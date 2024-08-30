@@ -1,24 +1,24 @@
-interface Address {
+interface IAddress {
   city: string;
   province: string;
   address: string;
   postalCode: string;
 }
 
-interface Accounting {
+interface IAccounting {
   debtToPay: number;
   accountReceivable: number;
 }
 
-interface IdentificationObject {
+interface IIdentificationObject {
   number: string;
   type: string;
 }
 
-interface Provider {
-  address: Address;
-  accounting: Accounting;
-  identificationObject: IdentificationObject;
+interface IProvider {
+  address: IAddress;
+  accounting: IAccounting;
+  identificationObject: IIdentificationObject;
   ivaCondition: string;
   name: string;
   phonePrimary: string;
@@ -35,4 +35,4 @@ interface Provider {
   statementAttached: string;
 }
 
-export { Provider };
+export { IProvider };
