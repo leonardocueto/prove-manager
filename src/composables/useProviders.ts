@@ -4,22 +4,6 @@ import { ref } from "vue";
 import { computed } from "@vue/reactivity";
 export default function () {
   const providerStore = useProviderStore();
-  const getProviders = async () => {
-    try {
-      const resp = await axios.get(
-        "/contacts?order_direction=ASC&type=provider"
-      );
-      console.log("Datos recibidos:", resp.data);
-    } catch (error) {
-      console.error("Error en la petición:", error);
-
-      throw new Error("Error en la petición");
-    }
-  };
-
-  const listProviders = computed(() => {
-    return providerStore.providers;
-  });
   const isCreateModalOpen = ref(false);
   const isUpdateModalOpen = ref(false);
   const formValues = ref({
@@ -56,6 +40,23 @@ export default function () {
     }
     isUpdateModalOpen.value = false;
   };
+
+  const getProviders = async () => {
+    try {
+      const resp = await axios.get(
+        "/contacts?order_direction=ASC&type=provider"
+      );
+      console.log("Datos recibidos:", resp.data);
+    } catch (error) {
+      console.error("Error en la petición:", error);
+
+      throw new Error("Error en la petición");
+    }
+  };
+
+  const listProviders = computed(() => {
+    return providerStore.providers;
+  });
 
   return {
     isCreateModalOpen,

@@ -144,7 +144,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
 import TablerIcons from "@/assets/icons";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
