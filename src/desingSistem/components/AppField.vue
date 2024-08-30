@@ -13,6 +13,7 @@
         :type="type"
         :id="id"
         :placeholder="$t(placeholder)"
+        required
         class="pl-10 py-1 px-2 rounded-lg border-2 text-base w-full focus:border-orange-200"
       />
     </div>

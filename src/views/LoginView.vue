@@ -37,7 +37,7 @@
                 $t("forgot password?")
               }}</a>
             </dir>
-            <app-button class="flex items-center justify-center">
+            <app-button type="primary" class="flex items-center justify-center">
               <icon-spin v-if="loading" />
               <span v-else>{{ $t("log in") }} </span>
             </app-button>

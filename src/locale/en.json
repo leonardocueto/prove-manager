@@ -25,5 +25,11 @@
   "ivaCondition": "IVA",
   "status": "Status",
   "edit": "Edit",
-  "delete": "Delete"
+  "delete": "Delete",
+  "list provider": "Provider's list",
+  "add provider": "Add Provider",
+  "enter name": "Enter Name",
+  "enter mail": "Enter Email",
+  "enter city": "Enter City",
+  "edit provider": "Edit Provider"
 }

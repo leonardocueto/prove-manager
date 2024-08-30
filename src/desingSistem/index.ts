@@ -18,7 +18,7 @@ import AppLangSwitch from "./components/AppLangSwitch.vue";
 import AppLogout from "./components/AppLogout.vue";
 import AppButtonModal from "./components/AppButtonModal.vue";
 import AppUpdateRight from "./components/AppUpdateRight.vue";
-import AppTable from "./components/AppTable.vue";
+
 import AppButtonAdd from "./components/AppButtonAdd.vue";
 import AppFadeModal from "./components/AppFadeModal.vue";
 
@@ -42,7 +42,6 @@ export {
   AppLangSwitch,
   AppLogout,
   AppUpdateRight,
-  AppTable,
   AppButtonModal,
   AppButtonAdd,
   AppFadeModal,
