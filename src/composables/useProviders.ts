@@ -1,7 +1,7 @@
 import { axios } from "@/utils/axios";
 import { useProviderStore } from "@/store/providerStore";
-import { ref } from "vue";
-import { computed } from "@vue/reactivity";
+import { ref, computed } from "vue";
+
 export default function () {
   const providerStore = useProviderStore();
   const isCreateModalOpen = ref(false);
