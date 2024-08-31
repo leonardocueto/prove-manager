@@ -1,19 +1,19 @@
 import { axios } from "@/utils/axios";
 import { providersStore } from "@/store/providerStore";
-import { computed } from "vue";
-
-interface IProvider {
-  id: number;
-  name: string;
-  email: string;
-  city: string;
-}
+import { computed, watch } from "vue";
+import { IProvider } from "@/interface/provider.interface";
 
 export default function () {
   const getProviders = async () => {
     try {
       const { data } = await axios.get(
-        "/contacts?order_direction=ASC&type=provider"
+        "/contacts?order_direction=ASC&type=provider",
+        {
+          headers: {
+            Authorization:
+              "Basic bGVvY3VldG8xOTk5KzFAZ21haWwuY29tOmEwZTgzYjQwNmIwYTZlNzZiMTdk",
+          },
+        }
       );
 
       providersStore.providers = data;
@@ -26,32 +26,76 @@ export default function () {
 
   const listProviders = computed(() => providersStore.providers);
 
-  const addProvider = (provider: IProvider) => {
-    providersStore.providers.push(provider);
+  const addProvider = async (providerData: IProvider) => {
+    console.log(providerData);
+    try {
+      const response = await axios.post("/contacts", providerData, {
+        headers: {
+          Authorization:
+            "Basic bGVvY3VldG8xOTk5KzFAZ21haWwuY29tOmEwZTgzYjQwNmIwYTZlNzZiMTdk",
+        },
+      });
+      console.log("Proveedor creado:", response.data);
+    } catch (error) {
+      console.error("Error al crear el proveedor:", error);
+      throw new Error("Error al crear el proveedor");
+    }
   };
-
-  const deleteProvider = (id: string | number) => {
-    const index = providersStore.providers.findIndex((p) => p.id === id);
-    providersStore.providers.splice(index, 1);
+  const deleteProvider = async (id: string | number) => {
+    try {
+      const response = await axios.delete(`/contacts?id=${id}`, {
+        headers: {
+          Authorization:
+            "Basic bGVvY3VldG8xOTk5KzFAZ21haWwuY29tOmEwZTgzYjQwNmIwYTZlNzZiMTdk",
+        },
+      });
+      console.log("Proveedor eliminado:", response.data);
+    } catch (error) {
+      console.error("Error al eliminar el proveedor:", error);
+      throw new Error("Error al eliminar el proveedor");
+    }
   };
-
-  const editProvider = (provider: IProvider) => {
-    const index = providersStore.providers.findIndex(
-      (p) => p.id === provider.id
-    );
-    providersStore.providers[index] = provider;
+  const editProvider = async (provider: IProvider) => {
+    try {
+      const response = await axios.put(`/contacts/${provider.id}`, provider, {
+        headers: {
+          Authorization:
+            "Basic bGVvY3VldG8xOTk5KzFAZ21haWwuY29tOmEwZTgzYjQwNmIwYTZlNzZiMTdk",
+        },
+      });
+      console.log("Proveedor actualizado:", response.data);
+    } catch (error) {
+      console.error("Error al actualizar el proveedor:", error);
+      throw new Error("Error al actualizar el proveedor");
+    }
   };
 
   const findProvider = (id: string | number): IProvider => {
     return (
-      providersStore.providers.find((p) => p.id === id) || {
+      providersStore.providers.find((p: IProvider) => p.id === id) || {
         id: 0,
+        address: {
+          city: "",
+          province: "",
+          address: "",
+          postalCode: "",
+        },
+        ivaCondition: "IVA_RESPONSABLE",
         name: "",
         email: "",
-        city: "",
+        type: "",
+        status: "active",
       }
     );
   };
+
+  watch(
+    () => providersStore.providers,
+    () => {
+      getProviders();
+    },
+    { deep: true }
+  );
 
   return {
     listProviders,

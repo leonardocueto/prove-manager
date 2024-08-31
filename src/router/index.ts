@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/providers",
     name: "providers",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/ClientView.vue"),
+      import(/* webpackChunkName: "about" */ "../views/ProviderView.vue"),
     meta: {
       layout: "DefaultLayout",
     },

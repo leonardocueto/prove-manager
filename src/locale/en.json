@@ -18,6 +18,9 @@
   "providers": "Providers",
   "name": "Name",
   "city": "City",
+  "province": "Province",
+  "address": "Address",
+  "postalcode": "Postal Code",
   "mail": "Email",
   "language": "Language",
   "options": "Options",
@@ -30,6 +33,12 @@
   "add provider": "Add Provider",
   "enter name": "Enter Name",
   "enter mail": "Enter Email",
+  "enter province": "Enter Province",
+  "enter address": "Enter Address",
+  "enter postal code": "Enter Postal Code",
   "enter city": "Enter City",
-  "edit provider": "Edit Provider"
+  "edit provider": "Edit Provider",
+  "cancel": "Cancel",
+  "save": "Save",
+  "providers not found": "Providers not found."
 }

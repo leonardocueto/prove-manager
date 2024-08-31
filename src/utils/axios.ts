@@ -11,7 +11,7 @@ const setToken = (email: string) => {
 
 const clearToken = () => {
   localStorage.removeItem("token-ac");
-  axios.defaults.headers.common["Authorization"] = null;
+  delete axios.defaults.headers.common["Authorization"];
 };
 
 axios.interceptors.response.use(

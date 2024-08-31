@@ -18,6 +18,9 @@
   "providers": "Proveedores",
   "name": "Nombre",
   "city": "Ciudad",
+  "province": "Provincia",
+  "address": "Calle",
+  "postalcode": "Codigo Postal",
   "mail": "Correo",
   "language": "Idioma",
   "options": "Opciones",
@@ -30,6 +33,12 @@
   "add provider": "Agregar Proveedor",
   "enter name": "Ingresar Nombre",
   "enter mail": "Ingresar Mail",
+  "enter province": "Ingresar Provincia",
+  "enter address": "Ingresar calle",
+  "enter postal code": "Ingresar codigo postal",
   "enter city": "Ingresar Ciudad",
-  "edit provider": "Editar Proveedor"
+  "edit provider": "Editar Proveedor",
+  "cancel": "Cancelar",
+  "save": "Guardar",
+  "providers not found": "Proveedores no encontrados"
 }

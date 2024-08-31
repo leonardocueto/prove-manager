@@ -16,23 +16,24 @@ interface IIdentificationObject {
 }
 
 interface IProvider {
-  address: IAddress;
-  accounting: IAccounting;
-  identificationObject: IIdentificationObject;
+  id?: string | number;
   ivaCondition: string;
   name: string;
-  phonePrimary: string;
-  phoneSecondary: string;
-  mobile: string;
-  seller: number;
-  priceList: number;
-  term: number;
   email: string;
   type: string;
   status: string;
-  fax: string;
-  ignoreRepeated: boolean;
-  statementAttached: string;
+  address: IAddress;
+  accounting?: IAccounting;
+  identificationObject?: IIdentificationObject;
+  phonePrimary?: string;
+  phoneSecondary?: string;
+  mobile?: string;
+  seller?: number;
+  priceList?: number;
+  term?: number;
+  fax?: string;
+  ignoreRepeated?: boolean;
+  statementAttached?: string;
 }
 
 export { IProvider };
