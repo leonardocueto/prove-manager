@@ -70,22 +70,11 @@ export default function () {
     }
   };
 
-  const findProvider = (id: string | number): IProvider => {
+  const findProvider = (id: string | number): IProvider | null => {
     return (
-      providersStore.providers.find((p: IProvider) => p.id === id) || {
-        id: 0,
-        address: {
-          city: "",
-          province: "",
-          address: "",
-          postalCode: "",
-        },
-        ivaCondition: "IVA_RESPONSABLE",
-        name: "",
-        email: "",
-        type: "",
-        status: "active",
-      }
+      providersStore.providers.find(
+        (provider: IProvider) => provider.id === id
+      ) || null
     );
   };
 
