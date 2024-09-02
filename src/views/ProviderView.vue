@@ -65,8 +65,8 @@
             <template #body="slotProps">
               <button-p
                 type="button"
-                @click="toggle"
                 class="rounded-full hover:bg-gray-50 p-2"
+                @click="toggle"
               >
                 <component
                   :is="iconComponent"
@@ -181,7 +181,7 @@ const {
   getProviders,
 } = useProviders();
 
-const toggle = (event: any) => {
+const toggle = (event: MouseEvent) => {
   op.value.toggle(event);
 };
 
@@ -232,6 +232,7 @@ const onSubmit = async (value: IProvider) => {
 onMounted(async () => {
   try {
     loading.value = true;
+
     await getProviders();
   } catch (error) {
     console.log(error);

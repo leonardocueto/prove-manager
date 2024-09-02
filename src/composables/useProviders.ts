@@ -1,6 +1,6 @@
 import { axios } from "@/utils/axios";
 import { providersStore } from "@/store/providerStore";
-import { computed, watch } from "vue";
+import { computed } from "vue";
 import { IProvider } from "@/interface/provider.interface";
 
 export default function () {
@@ -88,14 +88,6 @@ export default function () {
       }
     );
   };
-
-  watch(
-    () => providersStore.providers,
-    () => {
-      getProviders();
-    },
-    { deep: true }
-  );
 
   return {
     listProviders,
