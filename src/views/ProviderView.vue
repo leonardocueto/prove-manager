@@ -66,8 +66,8 @@
             <template #body="slotProps">
               <button-p
                 type="button"
-                @click="toggle"
                 class="rounded-full hover:bg-gray-50 p-2"
+                @click="toggle"
               >
                 <component
                   :is="iconComponent"
@@ -142,7 +142,7 @@ import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
 import { IProvider } from "@/interface/provider.interface";
 import { AppButtonAdd, AppFadeModal } from "@/desingSistem";
-import ProviderForm from "@/components/Forms/ProviderForm";
+import ProviderForm from "@/components/Forms/ProviderForm.vue";
 import useProviders from "@/composables/useProviders";
 
 const hoverIcon = ref(false);
@@ -182,7 +182,7 @@ const {
   getProviders,
 } = useProviders();
 
-const toggle = (event: any) => {
+const toggle = (event: MouseEvent) => {
   op.value.toggle(event);
 };
 
@@ -205,7 +205,7 @@ const openModal = ({ id }: { id?: string | number }) => {
     ? (titleModal.value = "edit provider")
     : (titleModal.value = "add provider");
 
-  if (id) formValues.value = findProvider(id);
+  if (id) formValues.value = findProvider(id) as IProvider;
   showModal.value = true;
 };
 const closeModal = () => {
@@ -233,6 +233,7 @@ const onSubmit = async (value: IProvider) => {
 onMounted(async () => {
   try {
     loading.value = true;
+
     await getProviders();
   } catch (error) {
     console.log(error);
