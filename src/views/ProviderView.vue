@@ -11,6 +11,7 @@
           removableSort
           :rows="10"
           :rowsPerPageOptions="[10, 20, 30, 50]"
+          class="custom-datatable"
         >
           <template #header>
             <nav class="flex items-center justify-between w-full">
