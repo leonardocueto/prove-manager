@@ -6,7 +6,7 @@
           v-model:filters="filters"
           :value="listProviders"
           tableStyle="min-width: 50rem"
-          scrollHeight="800px"
+          scrollHeight="200px"
           paginator
           removableSort
           :rows="10"
@@ -29,14 +29,14 @@
                   <input-text
                     v-model="filters['global'].value"
                     :placeholder="$t('search')"
-                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
                   />
                 </icon-field>
               </div>
             </nav>
           </template>
           <template #empty> {{ $t("providers not found") }} </template>
-
+          <template #loading> <skeleton></skeleton> </template>
           <column field="name" :header="$t('name')" sortable>
             <template #body="slotProps">
               <skeleton v-if="loading"></skeleton>
@@ -61,28 +61,49 @@
               </template>
             </template>
           </column>
-          <column class="w-20">
+          <column class="w-20 overflow-visible">
             <template #body="slotProps">
-              <app-button-modal class="z-10">
-                <template #top>
-                  <div
-                    class="flex gap-2 relative z-20"
-                    @click="openModal({ id: slotProps.data.id })"
-                  >
-                    <component :is="iconEdit" size="20" color="gray" />
-                    {{ $t("edit") }}
+              <button-p
+                type="button"
+                @click="toggle"
+                class="rounded-full hover:bg-gray-50 p-2"
+              >
+                <component
+                  :is="iconComponent"
+                  :size="20"
+                  :color="hoverIcon ? 'black' : 'gray'"
+                />
+              </button-p>
+              <popover ref="op">
+                <div class="flex flex-col gap-4">
+                  <div>
+                    <ul class="list-none p-0 m-0 flex flex-col">
+                      <li
+                        class="px-3 py-2 hover:bg-gray-100 cursor-pointer relative inline-block text-left rounded-md"
+                      >
+                        <div
+                          class="flex gap-2 relative z-20"
+                          @click="openModal({ id: slotProps.data.id })"
+                        >
+                          <component :is="iconEdit" size="20" color="gray" />
+                          {{ $t("edit") }}
+                        </div>
+                      </li>
+                      <li
+                        class="px-3 py-2 hover:bg-gray-100 cursor-pointer relative inline-block text-left rounded-md"
+                      >
+                        <div
+                          class="flex gap-2 relative z-20"
+                          @click="deleteProvider(slotProps.data.id)"
+                        >
+                          <component :is="iconDelete" size="20" color="gray" />
+                          {{ $t("delete") }}
+                        </div>
+                      </li>
+                    </ul>
                   </div>
-                </template>
-                <template #down>
-                  <div
-                    class="flex gap-2 relative z-20"
-                    @click="deleteProvider(slotProps.data.id)"
-                  >
-                    <component :is="iconDelete" size="20" color="gray" />
-                    {{ $t("delete") }}
-                  </div>
-                </template>
-              </app-button-modal>
+                </div>
+              </popover>
             </template>
           </column>
         </datatable>
@@ -111,43 +132,20 @@
 import { onMounted, ref } from "vue";
 import TablerIcons from "@/assets/icons";
 import { FilterMatchMode } from "@primevue/core/api";
+import Popover from "primevue/popover";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import InputText from "primevue/inputtext";
-
 import IconField from "primevue/iconfield";
+import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
-import ProviderForm from "@/components/Forms/ProviderForm";
-import { AppButtonModal, AppButtonAdd, AppFadeModal } from "@/desingSistem";
-import useProviders from "@/composables/useProviders";
 import { IProvider } from "@/interface/provider.interface";
+import { AppButtonAdd, AppFadeModal } from "@/desingSistem";
+import ProviderForm from "@/components/Forms/ProviderForm";
+import useProviders from "@/composables/useProviders";
 
-const {
-  listProviders,
-  findProvider,
-  addProvider,
-  editProvider,
-  deleteProvider,
-  getProviders,
-} = useProviders();
-
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-  "country.name": { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-  representative: { value: null, matchMode: FilterMatchMode.IN },
-  status: { value: null, matchMode: FilterMatchMode.EQUALS },
-  verified: { value: null, matchMode: FilterMatchMode.EQUALS },
-});
-
-const iconEdit = TablerIcons["IconPencil"];
-const iconDelete = TablerIcons["IconTrash"];
-const iconSearch = TablerIcons["IconSearch"];
-const datatable = DataTable;
-const column = Column;
-const inputText = InputText;
-const iconField = IconField;
-const skeleton = Skeleton;
+const hoverIcon = ref(false);
+const op = ref();
 const showModal = ref<boolean>(false);
 const loading = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
@@ -165,22 +163,40 @@ const formValues = ref<IProvider>({
   type: "",
   status: "active",
 });
-
-onMounted(async () => {
-  try {
-    loading.value = true;
-    await getProviders();
-  } catch (error) {
-    console.log(error);
-  } finally {
-    loading.value = false;
-  }
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  "country.name": { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  representative: { value: null, matchMode: FilterMatchMode.IN },
+  status: { value: null, matchMode: FilterMatchMode.EQUALS },
+  verified: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
 
-const onSubmit = async (value: IProvider) => {
-  isEdit.value ? await editProvider(value) : await addProvider(value);
-  closeModal();
+const {
+  listProviders,
+  findProvider,
+  addProvider,
+  editProvider,
+  deleteProvider,
+  getProviders,
+} = useProviders();
+
+const toggle = (event: any) => {
+  op.value.toggle(event);
 };
+
+const iconComponent = TablerIcons["IconDotsVertical"];
+const iconEdit = TablerIcons["IconPencil"];
+const iconDelete = TablerIcons["IconTrash"];
+const iconSearch = TablerIcons["IconSearch"];
+
+const datatable = DataTable;
+const column = Column;
+const inputText = InputText;
+const iconField = IconField;
+const skeleton = Skeleton;
+const buttonP = Button;
+const popover = Popover;
 
 const openModal = ({ id }: { id?: string | number }) => {
   isEdit.value = id ? true : false;
@@ -191,7 +207,6 @@ const openModal = ({ id }: { id?: string | number }) => {
   if (id) formValues.value = findProvider(id);
   showModal.value = true;
 };
-
 const closeModal = () => {
   showModal.value = false;
   formValues.value = {
@@ -208,4 +223,20 @@ const closeModal = () => {
     status: "active",
   };
 };
+
+const onSubmit = async (value: IProvider) => {
+  isEdit.value ? await editProvider(value) : await addProvider(value);
+  closeModal();
+};
+
+onMounted(async () => {
+  try {
+    loading.value = true;
+    await getProviders();
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loading.value = false;
+  }
+});
 </script>

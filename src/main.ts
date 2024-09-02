@@ -8,7 +8,6 @@ import ES from "@/locale/es.json";
 import EN from "@/locale/en.json";
 import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
-import { plugin as VueTippy } from "vue-tippy";
 
 const i18n = createI18n({
   legacy: false,
@@ -28,21 +27,11 @@ createApp(App)
       options: {
         prefix: "p",
         darkModeSelector: "system",
-        cssLayer: false,
+        cssLayer: {
+          name: "primevue",
+          order: "tailwind-base, primevue, tailwind-utilities",
+        },
       },
     },
   })
-  .use(
-    VueTippy,
-    // optional
-    {
-      directive: "tippy", // => v-tippy
-      component: "tippy", // => <tippy/>
-      componentSingleton: "tippy-singleton", // => <tippy-singleton/>,
-      defaultProps: {
-        placement: "auto-end",
-        allowHTML: true,
-      }, // => Global default options * see all props
-    }
-  )
   .mount("#app");

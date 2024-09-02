@@ -14,7 +14,7 @@
       </transition>
     </template>
     <template #option>
-      <div class="flex flex-col gap-2 w-full">
+      <div class="flex flex-col gap-4 w-full">
         <app-option-aside
           v-for="option in options"
           :key="option.text"
@@ -29,7 +29,7 @@
     <template #profile>
       <app-profile-aside
         name="Leonardo Cueto"
-        job="Developer frontend"
+        job="Frontend developer"
         :hide="showMenu"
       />
     </template>
