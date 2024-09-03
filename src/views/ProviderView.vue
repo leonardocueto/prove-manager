@@ -6,7 +6,7 @@
           v-model:filters="filters"
           :value="listProviders"
           tableStyle="min-width: 50rem"
-          scrollHeight="200px"
+          scrollHeight="min-height: 50rem"
           paginator
           removableSort
           :rows="10"
@@ -54,11 +54,11 @@
               </template>
             </template>
           </column>
-          <column field="city" :header="$t('city')" sortable>
+          <column field="city" :header="$t('status')" sortable>
             <template #body="slotProps">
               <skeleton v-if="loading"></skeleton>
               <template v-else>
-                {{ slotProps.data.address.city }}
+                <app-state :status="slotProps.data.status" />
               </template>
             </template>
           </column>
@@ -141,7 +141,7 @@ import IconField from "primevue/iconfield";
 import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
 import { IProvider } from "@/interface/provider.interface";
-import { AppButtonAdd, AppFadeModal } from "@/desingSistem";
+import { AppButtonAdd, AppFadeModal, AppState } from "@/desingSistem";
 import ProviderForm from "@/components/Forms/ProviderForm.vue";
 import useProviders from "@/composables/useProviders";
 
@@ -152,16 +152,10 @@ const loading = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
 const titleModal = ref("");
 const formValues = ref<IProvider>({
-  address: {
-    city: "",
-    province: "",
-    address: "",
-    postalCode: "",
-  },
   ivaCondition: "IVA_RESPONSABLE",
   name: "",
   email: "",
-  type: "",
+  type: "provider",
   status: "active",
 });
 const filters = ref({
@@ -211,16 +205,10 @@ const openModal = ({ id }: { id?: string | number }) => {
 const closeModal = () => {
   showModal.value = false;
   formValues.value = {
-    address: {
-      city: "",
-      province: "",
-      address: "",
-      postalCode: "",
-    },
     ivaCondition: "IVA_RESPONSABLE",
     name: "",
     email: "",
-    type: "",
+    type: "provider",
     status: "active",
   };
 };

@@ -24,7 +24,7 @@ createApp(App)
       preset: Aura,
       options: {
         prefix: "p",
-        darkModeSelector: "system",
+        darkModeSelector: ".my-app-dark",
         cssLayer: {
           name: "primevue",
           order: "tailwind-base, primevue, tailwind-utilities",

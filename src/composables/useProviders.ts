@@ -6,16 +6,12 @@ import { IProvider } from "@/interface/provider.interface";
 export default function () {
   const getProviders = async () => {
     try {
-      const { data } = await axios.get(
-        "/contacts?order_direction=ASC&type=provider",
-        {
-          headers: {
-            Authorization:
-              "Basic bGVvY3VldG8xOTk5KzFAZ21haWwuY29tOmEwZTgzYjQwNmIwYTZlNzZiMTdk",
-          },
-        }
-      );
-
+      const { data } = await axios.get("/contacts?order_direction=ASC", {
+        headers: {
+          Authorization:
+            "Basic bGVvY3VldG8xOTk5KzEwQGdtYWlsLmNvbTpjYTU0YjFlNjE5MDIxYTY0OTIzMQ==",
+        },
+      });
       providersStore.providers = data;
     } catch (error) {
       console.error("Error en la petición:", error);
@@ -32,10 +28,11 @@ export default function () {
       const response = await axios.post("/contacts", providerData, {
         headers: {
           Authorization:
-            "Basic bGVvY3VldG8xOTk5KzFAZ21haWwuY29tOmEwZTgzYjQwNmIwYTZlNzZiMTdk",
+            "Basic bGVvY3VldG8xOTk5KzEwQGdtYWlsLmNvbTpjYTU0YjFlNjE5MDIxYTY0OTIzMQ==",
         },
       });
       console.log("Proveedor creado:", response.data);
+      if (response.status == 200) getProviders();
     } catch (error) {
       console.error("Error al crear el proveedor:", error);
       throw new Error("Error al crear el proveedor");
@@ -46,10 +43,11 @@ export default function () {
       const response = await axios.delete(`/contacts?id=${id}`, {
         headers: {
           Authorization:
-            "Basic bGVvY3VldG8xOTk5KzFAZ21haWwuY29tOmEwZTgzYjQwNmIwYTZlNzZiMTdk",
+            "Basic bGVvY3VldG8xOTk5KzEwQGdtYWlsLmNvbTpjYTU0YjFlNjE5MDIxYTY0OTIzMQ==",
         },
       });
       console.log("Proveedor eliminado:", response.data);
+      if (response.status == 200) getProviders();
     } catch (error) {
       console.error("Error al eliminar el proveedor:", error);
       throw new Error("Error al eliminar el proveedor");
@@ -60,9 +58,10 @@ export default function () {
       const response = await axios.put(`/contacts/${provider.id}`, provider, {
         headers: {
           Authorization:
-            "Basic bGVvY3VldG8xOTk5KzFAZ21haWwuY29tOmEwZTgzYjQwNmIwYTZlNzZiMTdk",
+            "Basic bGVvY3VldG8xOTk5KzEwQGdtYWlsLmNvbTpjYTU0YjFlNjE5MDIxYTY0OTIzMQ==",
         },
       });
+      if (response.status == 200) getProviders();
       console.log("Proveedor actualizado:", response.data);
     } catch (error) {
       console.error("Error al actualizar el proveedor:", error);

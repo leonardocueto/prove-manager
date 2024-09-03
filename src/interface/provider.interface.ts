@@ -22,7 +22,7 @@ interface IProvider {
   email: string;
   type: string;
   status: string;
-  address: IAddress;
+  address?: IAddress;
   accounting?: IAccounting;
   identificationObject?: IIdentificationObject;
   phonePrimary?: string;

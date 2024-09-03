@@ -94,8 +94,8 @@ const { doLogin } = useAuth();
 
 const loading = ref(false);
 const form = ref({
-  username: "leocueto1999+1@gmail.com",
-  password: "",
+  username: "leocueto1999+10@gmail.com",
+  password: "1",
 });
 
 const handleSubmit = async () => {

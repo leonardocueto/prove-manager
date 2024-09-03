@@ -14,34 +14,6 @@
       type="text"
       placeholder="enter mail"
     />
-    <app-field
-      v-model="formValues.address.city"
-      id="city"
-      label="city"
-      type="text"
-      placeholder="enter city"
-    />
-    <app-field
-      v-model="formValues.address.province"
-      id="province"
-      label="province"
-      type="text"
-      placeholder="enter province"
-    />
-    <app-field
-      v-model="formValues.address.address"
-      id="address"
-      label="address"
-      type="text"
-      placeholder="enter address"
-    />
-    <app-field
-      v-model="formValues.address.postalCode"
-      id="postalcode"
-      label="postalcode"
-      type="text"
-      placeholder="enter postal code"
-    />
     <div class="flex gap-2">
       <app-button type="secondary" @click="closeModal">{{
         $t("cancel")
