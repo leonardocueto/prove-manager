@@ -1,23 +1,23 @@
 <template>
   <datatable
     v-model:filters="filters"
-    :value="listProviders"
+    :value="listProducts"
     tableStyle="min-width: 50rem"
     scrollHeight="min-height: 50rem"
     paginator
     removableSort
     :rows="10"
     :rowsPerPageOptions="[10, 20, 30, 50]"
-    :globalFilterFields="['name', 'email', 'status']"
+    :globalFilterFields="['name', 'description', 'price']"
   >
     <template #header>
       <nav class="flex items-center justify-between w-full">
         <h2 class="font-semibold text-xl text-gray-800">
-          {{ $t("list provider") }}
+          {{ $t("list products") }}
         </h2>
         <div class="flex items-center space-x-4">
           <app-button-add @click="openModal">
-            {{ $t("add provider") }}
+            {{ $t("add product") }}
           </app-button-add>
           <icon-field class="relative flex items-center w-64">
             <icon-search size="20" class="absolute left-3 text-gray-500" />
@@ -30,7 +30,7 @@
         </div>
       </nav>
     </template>
-    <template #empty> {{ $t("providers not found") }} </template>
+    <template #empty> {{ $t("product not found") }} </template>
     <template #loading> <skeleton></skeleton> </template>
     <column field="name" :header="$t('name')" sortable>
       <template #body="slotProps">
@@ -40,19 +40,19 @@
         </template>
       </template>
     </column>
-    <column field="email" :header="$t('mail')" sortable>
+    <column field="description" :header="$t('description')" sortable>
       <template #body="slotProps">
         <skeleton v-if="loading"></skeleton>
         <template v-else>
-          {{ slotProps.data.email }}
+          {{ slotProps.data.description }}
         </template>
       </template>
     </column>
-    <column field="status" :header="$t('status')" sortable>
+    <column field="price" :header="$t('price')" sortable>
       <template #body="slotProps">
         <skeleton v-if="loading"></skeleton>
         <template v-else>
-          <app-state :status="slotProps.data.status" />
+          <p>{{ slotProps.data.price[0].price }}</p>
         </template>
       </template>
     </column>
@@ -84,28 +84,6 @@
                     {{ $t("edit") }}
                   </div>
                 </li>
-                <li
-                  class="px-3 py-2 hover:bg-gray-100 cursor-pointer relative inline-block text-left rounded-md"
-                >
-                  <div
-                    class="flex gap-2 relative z-20"
-                    @click="deleteProvider(slotProps.data.id)"
-                  >
-                    <component :is="iconDelete" size="20" color="gray" />
-                    {{ $t("delete") }}
-                  </div>
-                </li>
-                <li
-                  class="px-3 py-2 hover:bg-gray-100 cursor-pointer relative inline-block text-left rounded-md"
-                >
-                  <div
-                    class="flex gap-2 relative z-20"
-                    @click="switchStatus(slotProps.data.id)"
-                  >
-                    <component :is="iconReplace" size="20" color="gray" />
-                    {{ $t("switch status") }}
-                  </div>
-                </li>
               </ul>
             </div>
           </div>
@@ -114,25 +92,27 @@
     </column>
   </datatable>
   <ptoast />
-  <!--Create Provider Modal-->
   <app-fade-modal :isVisible="showModal">
     <div class="bg-white min-w-[500px] min-h-96 rounded-2xl p-6">
       <div class="pb-4">
         <h1 class="font-bold text-2xl pb-4">{{ $t(titleModal) }}</h1>
 
-        <provider-form
+        <product-form
           :values="formValues"
           @close="closeModal"
           @submit="onSubmit"
-        ></provider-form>
+        ></product-form>
       </div>
     </div>
   </app-fade-modal>
-  <!---->
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
+import { AppFadeModal, AppButtonAdd } from "@/desingSistem";
+import ProductForm from "@/components/Forms/ProductForm.vue";
+import useProducts from "@/composables/useProducts";
+import { IProduct } from "@/interface/product.interface";
 import TablerIcons from "@/assets/icons";
 import { FilterMatchMode } from "@primevue/core/api";
 import Popover from "primevue/popover";
@@ -142,50 +122,17 @@ import InputText from "primevue/inputtext";
 import IconField from "primevue/iconfield";
 import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
-import { IProvider } from "@/interface/provider.interface";
-import { AppButtonAdd, AppFadeModal, AppState } from "@/desingSistem";
-import ProviderForm from "@/components/Forms/ProviderForm.vue";
-import useProviders from "@/composables/useProviders";
 import Toast from "primevue/toast";
 const ptoast = Toast;
 
-const hoverIcon = ref(false);
-const op = ref();
 const showModal = ref<boolean>(false);
-
 const titleModal = ref("");
-const formValues = ref<IProvider>({
-  ivaCondition: "IVA_RESPONSABLE",
-  name: "",
-  email: "",
-  type: "provider",
-  status: "active",
-});
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-});
+const op = ref();
 
-const {
-  listProviders,
-  findProvider,
-  addProvider,
-  editProvider,
-  deleteProvider,
-  getProviders,
-  switchStatus,
-  loading,
-  isEdit,
-} = useProviders();
-
-const toggle = (event: MouseEvent) => {
-  op.value.toggle(event);
-};
-
+const hoverIcon = ref(false);
 const iconComponent = TablerIcons["IconDotsVertical"];
 const iconEdit = TablerIcons["IconPencil"];
-const iconDelete = TablerIcons["IconTrash"];
 const iconSearch = TablerIcons["IconSearch"];
-const iconReplace = TablerIcons["IconReplace"];
 
 const datatable = DataTable;
 const column = Column;
@@ -195,36 +142,63 @@ const skeleton = Skeleton;
 const buttonP = Button;
 const popover = Popover;
 
+const {
+  loading,
+  isEdit,
+  getProduct,
+  listProducts,
+  addProduct,
+  editProduct,
+  findProduct,
+} = useProducts();
+
+const formValues = ref<IProduct>({
+  name: "",
+  description: "",
+  price: [{ price: 0 }],
+  inventory: { unit: "unit" },
+});
+
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  description: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  price: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
+
+const toggle = (event: MouseEvent) => {
+  op.value.toggle(event);
+};
+
 const openModal = ({ id }: { id?: string | number }) => {
   isEdit.value = id ? true : false;
   isEdit.value == true
-    ? (titleModal.value = "edit provider")
-    : (titleModal.value = "add provider");
+    ? (titleModal.value = "edit product")
+    : (titleModal.value = "add product");
 
-  if (id) formValues.value = findProvider(id) as IProvider;
+  if (id) formValues.value = findProduct(id) as IProduct;
   showModal.value = true;
 };
 const closeModal = () => {
   showModal.value = false;
   formValues.value = {
-    ivaCondition: "IVA_RESPONSABLE",
     name: "",
-    email: "",
-    type: "provider",
-    status: "active",
+    description: "",
+    price: [{ price: 0 }],
+    inventory: { unit: "unit" },
   };
 };
 
-const onSubmit = async (value: IProvider) => {
-  isEdit.value ? await editProvider(value) : await addProvider(value);
+const onSubmit = async (value: IProduct) => {
+  console.log(value);
+  isEdit.value ? await editProduct(value) : await addProduct(value);
   closeModal();
 };
 
 onMounted(async () => {
   try {
     loading.value = true;
-
-    await getProviders();
+    await getProduct();
   } catch (error) {
     console.log(error);
   } finally {

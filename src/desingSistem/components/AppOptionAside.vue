@@ -33,6 +33,23 @@ const active = computed(() => {
 });
 </script>
 <style scoped>
+@keyframes slideIn {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
 .v-enter-active {
   transition: opacity 1s ease;
 }
@@ -43,11 +60,13 @@ const active = computed(() => {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+  animation: slideOut 0.3s forwards;
 }
 
 .router-link-active {
   @apply font-bold;
   @apply border-b-2;
   @apply border-primary;
+  animation: slideIn 0.3s forwards;
 }
 </style>

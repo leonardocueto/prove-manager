@@ -40,5 +40,17 @@
   "edit provider": "Edit Provider",
   "cancel": "Cancel",
   "save": "Save",
-  "providers not found": "Providers not found."
+  "providers not found": "Providers not found.",
+  "switch status": "Switch Status",
+  "active": "Active",
+  "inactive": "Inactive",
+  "items": "Items",
+  "description": "Description",
+  "price": "Price",
+  "list products": "List of Products",
+  "add product": "Add Product",
+  "edit product": "Edit Product",
+  "enter description": "Enter Description",
+  "enter price": "Enter Price",
+  "product not found": "Product not Found"
 }

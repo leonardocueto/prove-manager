@@ -26,7 +26,7 @@ const props = defineProps<{
   label: string;
   id?: string;
   type: string;
-  modelValue: string;
+  modelValue: string | number;
   placeholder: string;
   iconLeft?: string;
 }>();

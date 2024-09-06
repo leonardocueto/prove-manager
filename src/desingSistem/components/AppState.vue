@@ -4,7 +4,7 @@
     :class="status == 'active' ? 'bg-green-200' : 'bg-red-200'"
   >
     <p>
-      {{ status }}
+      {{ $t(status) }}
     </p>
   </div>
 </template>
@@ -14,6 +14,5 @@ import { defineProps, ref } from "vue";
 const props = defineProps<{
   status: string;
 }>();
-
 const status = ref<string>(props.status);
 </script>

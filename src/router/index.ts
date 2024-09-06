@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/LoginView.vue"),
+      import(/* webpackChunkName: "Login" */ "../views/LoginView.vue"),
     meta: {
       layout: "BlankLayout",
     },
@@ -22,7 +22,16 @@ const routes: Array<RouteRecordRaw> = [
     path: "/providers",
     name: "providers",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/ProviderView.vue"),
+      import(/* webpackChunkName: "providers" */ "../views/ProviderView.vue"),
+    meta: {
+      layout: "DefaultLayout",
+    },
+  },
+  {
+    path: "/items",
+    name: "items",
+    component: () =>
+      import(/* webpackChunkName: "items" */ "../views/ItemsView.vue"),
     meta: {
       layout: "DefaultLayout",
     },

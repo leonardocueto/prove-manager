@@ -7,6 +7,7 @@ import ES from "@/locale/es.json";
 import EN from "@/locale/en.json";
 import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
+import ToastService from "primevue/toastservice";
 
 const i18n = createI18n({
   legacy: false,
@@ -19,6 +20,7 @@ const i18n = createI18n({
 createApp(App)
   .use(router)
   .use(i18n)
+  .use(ToastService)
   .use(PrimeVue, {
     theme: {
       preset: Aura,
