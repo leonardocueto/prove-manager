@@ -7,7 +7,6 @@ export default function () {
       const resp = await axios.get("/sellers/1");
       return resp.status;
     } catch (error) {
-      clearToken();
       throw new Error("Error al iniciar sesion");
     }
   };
