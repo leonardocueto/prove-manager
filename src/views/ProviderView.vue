@@ -120,6 +120,7 @@
 
         <provider-form
           :values="formValues"
+          :loading="loadingForm"
           @close="closeModal"
           @submit="onSubmit"
         ></provider-form>
@@ -144,6 +145,19 @@ import IconField from "primevue/iconfield";
 import Button from "primevue/button";
 
 import useProviders from "@/composables/useProviders";
+import Alert from "@/utils/alert";
+
+const {
+  listProviders,
+  findProvider,
+  addProvider,
+  editProvider,
+  deleteProvider,
+  getProviders,
+  switchStatus,
+} = useProviders();
+
+const { alert } = Alert();
 
 const hoverIcon = ref(false);
 const op = ref();
@@ -162,16 +176,6 @@ const formValues = ref<IProvider>({
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
-
-const {
-  listProviders,
-  findProvider,
-  addProvider,
-  editProvider,
-  deleteProvider,
-  getProviders,
-  switchStatus,
-} = useProviders();
 
 const toggle = (event: MouseEvent) => {
   op.value.toggle(event);
@@ -207,6 +211,7 @@ const closeModal = () => {
 };
 
 const onSubmit = async (value: IProvider) => {
+  console.log(value);
   try {
     loadingForm.value = true;
 
@@ -215,8 +220,17 @@ const onSubmit = async (value: IProvider) => {
     } else {
       await addProvider(value);
     }
+    alert({
+      severity: "success",
+      summary: "Success",
+      detail: "",
+    });
   } catch (error) {
-    console.log(error);
+    alert({
+      severity: "error",
+      summary: "Error",
+      detail: (error as Error).message,
+    });
   } finally {
     loadingForm.value = false;
     closeModal();
@@ -228,7 +242,11 @@ onMounted(async () => {
     loadingTable.value = true;
     await getProviders();
   } catch (error) {
-    console.log(error);
+    alert({
+      severity: "error",
+      summary: "Error",
+      detail: (error as Error).message,
+    });
   } finally {
     loadingTable.value = false;
   }

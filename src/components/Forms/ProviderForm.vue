@@ -22,9 +22,14 @@
         @click="closeModal"
         >{{ $t("cancel") }}</app-button
       >
-      <app-button :loading="loading" :disabled="loading" type="primary">{{
-        $t("save")
-      }}</app-button>
+      <app-button
+        :loading="loading"
+        :disabled="loading"
+        type="primary"
+        nativeType="submit"
+      >
+        {{ $t("save") }}
+      </app-button>
     </div>
   </app-form>
 </template>
