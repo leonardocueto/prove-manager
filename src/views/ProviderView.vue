@@ -182,11 +182,7 @@ const toggle = (event: MouseEvent) => {
 };
 
 // const datatable = DataTable;
-const column = Column;
-const inputText = InputText;
-const iconField = IconField;
 const buttonP = Button;
-const popover = Popover;
 
 const openModal = ({ id }: { id?: string | number }) => {
   if (id) {
