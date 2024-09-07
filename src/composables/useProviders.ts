@@ -1,33 +1,19 @@
 import { axios } from "@/utils/axios";
 import { providersStore } from "@/store/providerStore";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { IProvider } from "@/interface/provider.interface";
 
 export default function () {
-  const loading = ref<boolean>(false);
-  const isEdit = ref<boolean>(false);
-
   const getProviders = async () => {
-    loading.value = true;
     try {
       const { data } = await axios.get(
         "/contacts?order_direction=ASC&type=provider"
       );
       providersStore.providers = data;
-      console.log("getProviders");
-      loading.value = false;
     } catch (error) {
-      console.error("Error en la petición:", error);
-
-      alert({
-        severity: "error",
-        summary: "Error to get providers",
-        detail: "Error to get providers " + error,
-      });
+      throw new Error((error as Error).message || "Error to get providers");
     }
   };
-
-  const listProviders = computed(() => providersStore.providers);
 
   const addProvider = async (providerData: IProvider) => {
     try {
@@ -39,14 +25,11 @@ export default function () {
   };
 
   const deleteProvider = async (id: string | number) => {
-    loading.value = true;
     try {
       const response = await axios.delete(`/contacts?id=${id}`);
-      console.log("Proveedor eliminado:", response.data);
       if (response.status == 200) getProviders();
-      loading.value = false;
     } catch (error) {
-      console.error("Error al eliminar el proveedor:", error);
+      throw new Error((error as Error).message || "Error to delete provider");
     }
   };
 
@@ -94,6 +77,8 @@ export default function () {
     );
   };
 
+  const listProviders = computed(() => providersStore.providers);
+
   return {
     listProviders,
     addProvider,
@@ -102,7 +87,5 @@ export default function () {
     findProvider,
     getProviders,
     switchStatus,
-    loading,
-    isEdit,
   };
 }
