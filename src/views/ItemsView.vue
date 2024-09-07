@@ -1,14 +1,15 @@
 <template>
-  <datatable
+  <data-table
     v-model:filters="filters"
     :value="listProducts"
-    tableStyle="min-width: 50rem"
-    scrollHeight="min-height: 50rem"
+    tableStyle="min-width: 25rem"
+    scrollHeight="height: 800px"
+    class="min-h-8 max-h-[800px]"
     paginator
     removableSort
     :rows="10"
     :rowsPerPageOptions="[10, 20, 30, 50]"
-    :globalFilterFields="['name', 'description', 'price']"
+    :globalFilterFields="['name', 'price', 'description']"
   >
     <template #header>
       <nav class="flex items-center justify-between w-full">
@@ -20,7 +21,11 @@
             {{ $t("add product") }}
           </app-button-add>
           <icon-field class="relative flex items-center w-64">
-            <icon-search size="20" class="absolute left-3 text-gray-500" />
+            <app-icon
+              icon="IconSearch"
+              size="small"
+              class="absolute left-3 text-gray-500"
+            />
             <input-text
               v-model="filters['global'].value"
               :placeholder="$t('search')"
@@ -31,7 +36,7 @@
       </nav>
     </template>
     <template #empty> {{ $t("product not found") }} </template>
-    <template #loading> <skeleton></skeleton> </template>
+
     <column field="name" :header="$t('name')" sortable>
       <template #body="slotProps">
         <skeleton v-if="loading"></skeleton>
@@ -63,11 +68,11 @@
           class="rounded-full hover:bg-gray-50 p-2"
           @click="toggle"
         >
-          <component
-            :is="iconComponent"
-            :size="20"
+          <app-icon
+            icon="IconDotsVertical"
+            size="small"
             :color="hoverIcon ? 'black' : 'gray'"
-          />
+          ></app-icon>
         </button-p>
         <popover ref="op">
           <div class="flex flex-col gap-4">
@@ -80,7 +85,7 @@
                     class="flex gap-2 relative z-20"
                     @click="openModal({ id: slotProps.data.id })"
                   >
-                    <component :is="iconEdit" size="20" color="gray" />
+                    <app-icon icon="IconPencil" size="small" />
                     {{ $t("edit") }}
                   </div>
                 </li>
@@ -90,8 +95,7 @@
         </popover>
       </template>
     </column>
-  </datatable>
-  <ptoast />
+  </data-table>
   <app-fade-modal :isVisible="showModal">
     <div class="bg-white min-w-[500px] min-h-96 rounded-2xl p-6">
       <div class="pb-4">
@@ -109,11 +113,10 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
-import { AppFadeModal, AppButtonAdd } from "@/desingSistem";
-import ProductForm from "@/components/Forms/ProductForm.vue";
-import useProducts from "@/composables/useProducts";
 import { IProduct } from "@/interface/product.interface";
-import TablerIcons from "@/assets/icons";
+import { AppFadeModal, AppButtonAdd, AppIcon } from "@/desingSistem";
+import ProductForm from "@/components/Forms/ProductForm.vue";
+
 import { FilterMatchMode } from "@primevue/core/api";
 import Popover from "primevue/popover";
 import DataTable from "primevue/datatable";
@@ -122,35 +125,22 @@ import InputText from "primevue/inputtext";
 import IconField from "primevue/iconfield";
 import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
-import Toast from "primevue/toast";
-const ptoast = Toast;
 
+import useProducts from "@/composables/useProducts";
+import Alert from "@/utils/alert";
+
+const { getProduct, listProducts, addProduct, editProduct, findProduct } =
+  useProducts();
+const { alert } = Alert();
+
+const skeleton = Skeleton;
+const buttonP = Button;
+
+const loading = ref<boolean>(false);
 const showModal = ref<boolean>(false);
 const titleModal = ref("");
 const op = ref();
-
 const hoverIcon = ref(false);
-const iconComponent = TablerIcons["IconDotsVertical"];
-const iconEdit = TablerIcons["IconPencil"];
-const iconSearch = TablerIcons["IconSearch"];
-
-const datatable = DataTable;
-const column = Column;
-const inputText = InputText;
-const iconField = IconField;
-const skeleton = Skeleton;
-const buttonP = Button;
-const popover = Popover;
-
-const {
-  loading,
-  isEdit,
-  getProduct,
-  listProducts,
-  addProduct,
-  editProduct,
-  findProduct,
-} = useProducts();
 
 const formValues = ref<IProduct>({
   name: "",
@@ -158,12 +148,11 @@ const formValues = ref<IProduct>({
   price: [{ price: 0 }],
   inventory: { unit: "unit" },
 });
-
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  price: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.CONTAINS },
   description: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  price: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
 const toggle = (event: MouseEvent) => {
@@ -171,14 +160,15 @@ const toggle = (event: MouseEvent) => {
 };
 
 const openModal = ({ id }: { id?: string | number }) => {
-  isEdit.value = id ? true : false;
-  isEdit.value == true
-    ? (titleModal.value = "edit product")
-    : (titleModal.value = "add product");
-
-  if (id) formValues.value = findProduct(id) as IProduct;
+  if (id) {
+    titleModal.value = "edit product";
+    formValues.value = findProduct(id) as IProduct;
+  } else {
+    titleModal.value = "add product";
+  }
   showModal.value = true;
 };
+
 const closeModal = () => {
   showModal.value = false;
   formValues.value = {
@@ -190,9 +180,28 @@ const closeModal = () => {
 };
 
 const onSubmit = async (value: IProduct) => {
-  console.log(value);
-  isEdit.value ? await editProduct(value) : await addProduct(value);
-  closeModal();
+  try {
+    loading.value = true;
+    if (value.id) {
+      await editProduct(value);
+    } else {
+      await addProduct(value);
+    }
+    alert({
+      severity: "success",
+      summary: "Success",
+      detail: "",
+    });
+  } catch (error) {
+    alert({
+      severity: "error",
+      summary: "Error",
+      detail: (error as Error).message,
+    });
+  } finally {
+    loading.value = false;
+    closeModal();
+  }
 };
 
 onMounted(async () => {
@@ -200,7 +209,11 @@ onMounted(async () => {
     loading.value = true;
     await getProduct();
   } catch (error) {
-    console.log(error);
+    alert({
+      severity: "error",
+      summary: "Error",
+      detail: (error as Error).message,
+    });
   } finally {
     loading.value = false;
   }

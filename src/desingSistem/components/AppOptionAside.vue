@@ -4,7 +4,7 @@
     :class="hide ? 'justify-start' : ' justify-center'"
   >
     <router-link :to="{ name: link }" class="flex gap-2 px-1">
-      <component :is="iconComponentLeft" :size="size" :color="active" />
+      <app-icon :icon="props.iconComponent" size="small" :color="active" />
       <transition>
         <p v-if="hide">{{ $t(`${text}`) }}</p>
       </transition>
@@ -12,20 +12,19 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, defineProps } from "vue";
-import TablerIcons from "@/assets/icons";
+import { computed, defineProps, withDefaults } from "vue";
+import { AppIcon } from "@/desingSistem";
 import { useRoute } from "vue-router";
-const props = defineProps<{
-  text: string;
-  iconComponent?: string;
-  size: number;
-  hide: boolean;
-  link: string;
-}>();
+const props = withDefaults(
+  defineProps<{
+    text: string;
+    iconComponent?: string;
 
-const iconComponentLeft = computed(() => {
-  return TablerIcons[props.iconComponent as keyof typeof TablerIcons] || null;
-});
+    hide: boolean;
+    link: string;
+  }>(),
+  {}
+);
 
 const route = useRoute();
 const active = computed(() => {

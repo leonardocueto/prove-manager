@@ -3,7 +3,6 @@ import IconGoogle from "./components/icons/IconGoogle.vue";
 import IconApple from "./components/icons/IconApple.vue";
 import IconMail from "./components/icons/IconMail.vue";
 import IconEye from "./components/icons/IconEye.vue";
-import IconSpin from "./components/icons/IconSpin.vue";
 import IconFacebook from "./components/icons/IconFacebook.vue";
 import AppForm from "./components/AppForm.vue";
 import AppField from "./components/AppField.vue";
@@ -24,7 +23,6 @@ import AppFadeModal from "./components/AppFadeModal.vue";
 import AppIcon from "./components/AppIcon.vue";
 
 export {
-  IconSpin,
   IconMail,
   IconEye,
   IconCross,

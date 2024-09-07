@@ -22,9 +22,3 @@ export default function () {
 
   return { alert };
 }
-
-// alert({
-//   severity: "success",
-//   summary: "Success to delete provider",
-//   detail: "Provider Edited",
-// });

@@ -62,10 +62,8 @@ export default function () {
       });
 
       if (response.status == 200) getProviders();
-
-      console.log("Provider actualizado:", updatedProvider);
     } catch (error) {
-      console.log("Error al actualizar el proveedor:", error);
+      throw new Error((error as Error).message || "Error to update products");
     }
   };
 

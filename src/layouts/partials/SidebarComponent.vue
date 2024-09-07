@@ -2,15 +2,17 @@
   <app-aside :hide="showMenu">
     <template #icon>
       <transition>
-        <component
-          :is="iconComponentMenu"
-          :key="iconComponentMenu"
-          :size="30"
-          color="white"
-          stroke-width="3"
-          class="rounded-lg cursor-pointer bg-gray-500 hover:bg-gray-400 p-1 ml-2"
-          @click="toggleMenu"
-        />
+        <div class="w-10">
+          <app-icon
+            :icon="iconComponentMenu"
+            :key="iconComponentMenu"
+            size="medium"
+            color="white"
+            stroke-width="3"
+            class="rounded-lg cursor-pointer bg-gray-500 hover:bg-gray-400 p-1 ml-2"
+            @click="toggleMenu"
+          />
+        </div>
       </transition>
     </template>
     <template #option>
@@ -37,19 +39,21 @@
 </template>
 <script lang="ts" setup>
 import { computed, ref } from "vue";
-import { AppAside, AppOptionAside, AppProfileAside } from "@/desingSistem";
-import TablerIcons from "@/assets/icons";
+import {
+  AppAside,
+  AppOptionAside,
+  AppProfileAside,
+  AppIcon,
+} from "@/desingSistem";
 
 const iconComponentMenu = computed(() =>
-  showMenu.value
-    ? TablerIcons["IconArrowBarToLeft"]
-    : TablerIcons["IconArrowBarToRight"]
+  showMenu.value ? "IconArrowBarToLeft" : "IconArrowBarToRight"
 );
 
 const options = [
-  { text: "dashboard", link: "dashboard", icon: "IconHome", size: 25 },
-  { text: "providers", link: "providers", icon: "IconUser", size: 25 },
-  { text: "items", link: "items", icon: "IconClipboardList", size: 25 },
+  { text: "dashboard", link: "dashboard", icon: "IconHome" },
+  { text: "providers", link: "providers", icon: "IconUser" },
+  { text: "items", link: "items", icon: "IconClipboardList" },
 ];
 
 const showMenu = ref(true);

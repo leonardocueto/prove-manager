@@ -22,7 +22,6 @@
 import { computed, defineProps, withDefaults } from "vue";
 import AppIcon from "@/desingSistem/components/AppIcon.vue";
 
-// Define props directamente
 const props = withDefaults(
   defineProps<{
     loading?: boolean;

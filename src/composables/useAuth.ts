@@ -7,7 +7,7 @@ export default function () {
       const resp = await axios.get("/sellers/1");
       return resp.status;
     } catch (error) {
-      throw new Error("Error al iniciar sesion");
+      throw new Error("Error al iniciar sesión");
     }
   };
   const doLogout = () => {

@@ -5,6 +5,7 @@
       id="Name"
       label="name"
       type="text"
+      icon="IconUser"
       placeholder="enter name"
     />
     <app-field
@@ -12,6 +13,7 @@
       id="Description"
       label="description"
       type="text"
+      icon="IconFileDescription"
       placeholder="enter description"
     />
     <app-field
@@ -19,24 +21,43 @@
       id="price"
       label="price"
       type="text"
+      icon="IconReceipt2"
       placeholder="enter price"
     />
     <div class="flex gap-2">
-      <app-button type="secondary" @click="closeModal">{{
-        $t("cancel")
-      }}</app-button>
-      <app-button type="primary">{{ $t("save") }}</app-button>
+      <app-button
+        :loading="loading"
+        :disabled="loading"
+        type="secondary"
+        @click="closeModal"
+        >{{ $t("cancel") }}</app-button
+      >
+      <app-button
+        :loading="loading"
+        :disabled="loading"
+        type="primary"
+        nativeType="submit"
+      >
+        {{ $t("save") }}
+      </app-button>
     </div>
   </app-form>
 </template>
 
 <script lang="ts" setup>
 import { AppForm, AppButton, AppField } from "@/desingSistem";
-import { reactive, defineEmits, defineProps } from "vue";
+import { reactive, defineEmits, defineProps, withDefaults } from "vue";
 import { IProduct } from "@/interface/product.interface";
-const props = defineProps<{
-  values: IProduct;
-}>();
+
+const props = withDefaults(
+  defineProps<{
+    values: IProduct;
+    loading?: boolean;
+  }>(),
+  {
+    loading: false,
+  }
+);
 
 const formValues = reactive({ ...props.values });
 

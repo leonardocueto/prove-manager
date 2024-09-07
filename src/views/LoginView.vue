@@ -37,9 +37,13 @@
                 $t("forgot password?")
               }}</a>
             </dir>
-            <app-button type="primary" class="flex items-center justify-center">
-              <icon-spin v-if="loading" />
-              <span v-else>{{ $t("log in") }} </span>
+            <app-button
+              :loading="loading"
+              :disabled="loading"
+              type="primary"
+              nativeType="submit"
+            >
+              {{ $t("log in") }}
             </app-button>
           </app-form>
 
@@ -87,7 +91,6 @@ import {
   IconApple,
   IconGoogle,
   IconFacebook,
-  IconSpin,
 } from "@/desingSistem";
 
 const { doLogin } = useAuth();

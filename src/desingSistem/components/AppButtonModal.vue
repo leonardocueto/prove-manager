@@ -13,11 +13,11 @@
         ]"
       >
         <p v-if="text">{{ $t(`${text}`) }}</p>
-        <component
-          :is="iconComponent"
-          :size="20"
+        <app-icon
+          icon="IconDotsVertical"
+          size="small"
           :color="hoverIcon ? 'black' : 'gray'"
-        />
+        ></app-icon>
       </button>
       <ul
         v-if="isOpen"
@@ -39,13 +39,11 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted, defineProps } from "vue";
-import TablerIcons from "@/assets/icons";
+import { AppIcon } from "@/desingSistem";
 
 defineProps<{
   text?: string;
 }>();
-
-const iconComponent = TablerIcons["IconDotsVertical"];
 const isOpen = ref(false);
 const toggle = () => {
   isOpen.value = !isOpen.value;

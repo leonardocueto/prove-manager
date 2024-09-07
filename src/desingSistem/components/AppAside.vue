@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="flex flex-col gap-8 px-2 py-8 justify-between h-screen bg-secondary transition-all duration-300 border-r"
+    class="flex flex-col gap-8 px-2 py-8 justify-between h-screen bg-secondary transition-all duration-300"
     :style="{ width: tamaño }"
   >
     <div class="flex flex-col w-full gap-6">
@@ -24,7 +24,7 @@ const tamaño = ref("15rem");
 watch(
   () => props.hide,
   (newVal) => {
-    tamaño.value = newVal ? "15rem" : "4.5rem";
+    tamaño.value = newVal ? "15rem" : "4rem";
   }
 );
 </script>

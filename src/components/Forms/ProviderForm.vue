@@ -5,6 +5,7 @@
       id="Name"
       label="name"
       type="text"
+      icon="IconUser"
       placeholder="enter name"
     />
     <app-field
@@ -12,6 +13,7 @@
       id="mail"
       label="mail"
       type="text"
+      icon="IconMail"
       placeholder="enter mail"
     />
     <div class="flex gap-2">

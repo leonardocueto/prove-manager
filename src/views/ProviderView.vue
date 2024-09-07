@@ -159,12 +159,13 @@ const {
 
 const { alert } = Alert();
 
+const buttonP = Button;
+
 const hoverIcon = ref(false);
 const op = ref();
 const showModal = ref<boolean>(false);
 const loadingTable = ref<boolean>(false);
 const loadingForm = ref<boolean>(false);
-
 const titleModal = ref("");
 const formValues = ref<IProvider>({
   ivaCondition: "IVA_RESPONSABLE",
@@ -175,15 +176,12 @@ const formValues = ref<IProvider>({
 });
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
 const toggle = (event: MouseEvent) => {
   op.value.toggle(event);
 };
-
-// const datatable = DataTable;
-const buttonP = Button;
-
 const openModal = ({ id }: { id?: string | number }) => {
   if (id) {
     titleModal.value = "edit provider";
@@ -191,7 +189,6 @@ const openModal = ({ id }: { id?: string | number }) => {
   } else {
     titleModal.value = "add provider";
   }
-
   showModal.value = true;
 };
 
@@ -207,7 +204,6 @@ const closeModal = () => {
 };
 
 const onSubmit = async (value: IProvider) => {
-  console.log(value);
   try {
     loadingForm.value = true;
 

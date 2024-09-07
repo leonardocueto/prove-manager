@@ -1,7 +1,7 @@
 <template>
   <div ref="dropdown" class="relative inline-block text-left z-10 w-full">
     <button @click="toggle" class="w-full rounded flex gap-2 items-center p-2">
-      <component :is="iconComponent" :size="20" color="gray" />
+      <app-icon icon="IconWorld" size="small" />
       {{ $t("language") }}
     </button>
     <ul
@@ -24,12 +24,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import TablerIcons from "@/assets/icons";
 import { ref, onMounted, onUnmounted } from "vue";
+import { AppIcon } from "@/desingSistem";
 import { useI18n } from "vue-i18n";
 
 const { locale } = useI18n();
-const iconComponent = TablerIcons["IconWorld"];
+
 const isOpen = ref(false);
 const dropdown = ref<HTMLElement | null>(null);
 const switchLanguage = (lang: string) => {
