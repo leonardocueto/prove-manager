@@ -15,21 +15,34 @@
       placeholder="enter mail"
     />
     <div class="flex gap-2">
-      <app-button type="secondary" @click="closeModal">{{
-        $t("cancel")
+      <app-button
+        :loading="loading"
+        :disabled="loading"
+        type="secondary"
+        @click="closeModal"
+        >{{ $t("cancel") }}</app-button
+      >
+      <app-button :loading="loading" :disabled="loading" type="primary">{{
+        $t("save")
       }}</app-button>
-      <app-button type="primary">{{ $t("save") }}</app-button>
     </div>
   </app-form>
 </template>
 
 <script lang="ts" setup>
 import { AppForm, AppButton, AppField } from "@/desingSistem";
-import { reactive, defineEmits, defineProps } from "vue";
+import { reactive, defineEmits, defineProps, withDefaults } from "vue";
 import { IProvider } from "@/interface/provider.interface";
-const props = defineProps<{
-  values: IProvider;
-}>();
+
+const props = withDefaults(
+  defineProps<{
+    values: IProvider;
+    loading?: boolean;
+  }>(),
+  {
+    loading: false,
+  }
+);
 
 const formValues = reactive({ ...props.values });
 

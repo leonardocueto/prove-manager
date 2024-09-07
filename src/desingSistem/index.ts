@@ -21,6 +21,7 @@ import AppUpdateRight from "./components/AppUpdateRight.vue";
 import AppState from "./components/AppState.vue";
 import AppButtonAdd from "./components/AppButtonAdd.vue";
 import AppFadeModal from "./components/AppFadeModal.vue";
+import AppIcon from "./components/AppIcon.vue";
 
 export {
   IconSpin,
@@ -46,4 +47,5 @@ export {
   AppButtonModal,
   AppButtonAdd,
   AppFadeModal,
+  AppIcon,
 };

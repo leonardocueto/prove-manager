@@ -2,27 +2,8 @@ import { axios } from "@/utils/axios";
 import { providersStore } from "@/store/providerStore";
 import { computed, ref } from "vue";
 import { IProvider } from "@/interface/provider.interface";
-import { useToast } from "primevue/usetoast";
 
 export default function () {
-  const toast = useToast();
-
-  const alert = ({
-    severity,
-    summary,
-    detail,
-  }: {
-    severity: "success" | "error";
-    summary: string;
-    detail: string;
-  }) => {
-    toast.add({
-      severity,
-      summary,
-      detail,
-      life: 3000,
-    });
-  };
   const loading = ref<boolean>(false);
   const isEdit = ref<boolean>(false);
 
@@ -49,27 +30,14 @@ export default function () {
   const listProviders = computed(() => providersStore.providers);
 
   const addProvider = async (providerData: IProvider) => {
-    loading.value = true;
-    console.log(providerData);
     try {
       const response = await axios.post("/contacts", providerData);
-      console.log("Proveedor creado:", response.data);
       if (response.status == 200) getProviders();
-      loading.value = false;
-      alert({
-        severity: "success",
-        summary: "Success to create providers",
-        detail: "Provider created",
-      });
     } catch (error) {
-      console.error("Error al crear el proveedor:", error);
-      alert({
-        severity: "error",
-        summary: "Error to create provider",
-        detail: "Error to create provider " + error,
-      });
+      throw new Error((error as Error).message || "Error to add provider");
     }
   };
+
   const deleteProvider = async (id: string | number) => {
     loading.value = true;
     try {
@@ -77,40 +45,17 @@ export default function () {
       console.log("Proveedor eliminado:", response.data);
       if (response.status == 200) getProviders();
       loading.value = false;
-      alert({
-        severity: "success",
-        summary: "Success to delete provider",
-        detail: "Provider Edited",
-      });
     } catch (error) {
       console.error("Error al eliminar el proveedor:", error);
-      alert({
-        severity: "error",
-        summary: "Error to edit provider",
-        detail: "Error to delete provider " + error,
-      });
     }
   };
+
   const editProvider = async (provider: IProvider) => {
-    loading.value = true;
-    isEdit.value = false;
     try {
-      console.log(provider);
       const response = await axios.put(`/contacts/${provider.id}`, provider);
       if (response.status == 200) getProviders();
-      loading.value = false;
-      alert({
-        severity: "success",
-        summary: "Success to edit provider",
-        detail: "Provider Edited",
-      });
     } catch (error) {
-      console.error("Error al actualizar el proveedor:", error);
-      alert({
-        severity: "error",
-        summary: "Error to edit provider",
-        detail: "Error to edit provider " + error,
-      });
+      throw new Error((error as Error).message || "Error to edit provider");
     }
   };
 
@@ -138,11 +83,6 @@ export default function () {
       console.log("Provider actualizado:", updatedProvider);
     } catch (error) {
       console.log("Error al actualizar el proveedor:", error);
-      alert({
-        severity: "error",
-        summary: "Error to switch status provider",
-        detail: "Error to switch status provider" + error,
-      });
     }
   };
 

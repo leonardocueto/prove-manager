@@ -2,36 +2,53 @@
   <div class="d-button">
     <button
       :class="[
-        'p-2 my-2 w-full rounded-lg text-white text-center',
+        'p-2 my-2 w-full rounded-lg text-white',
+        'text-center flex justify-center items-center',
         buttonClass,
+        { disabled: props.disabled },
       ]"
-      :type="buttonType"
+      :type="nativeType"
+      :disabled="props.disabled"
     >
-      <slot />
+      <div v-if="loading" class="animate-spin w-5">
+        <app-icon icon="IconLoader2" size="small" color="white" />
+      </div>
+      <slot v-else />
     </button>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, defineProps } from "vue";
+import { computed, defineProps, withDefaults } from "vue";
+import AppIcon from "@/desingSistem/components/AppIcon.vue";
 
 // Define props directamente
-const props = defineProps<{
-  type?: "primary" | "secondary";
-}>();
-
-const buttonType = computed(() =>
-  props.type === "primary" ? "submit" : "button"
+const props = withDefaults(
+  defineProps<{
+    loading?: boolean;
+    type?: "primary" | "secondary";
+    nativeType?: "button" | "submit" | "reset";
+    disabled?: boolean;
+  }>(),
+  {
+    type: "primary",
+    loading: false,
+    nativeType: "button",
+    disabled: false,
+  }
 );
 
-const buttonClass = computed(() =>
-  props.type === "primary" ? "btn-primary" : "btn-secondary"
-);
+const buttonClass = computed(() => `btn-${props.type}`);
 </script>
 
 <style scoped>
 .d-button {
   @apply w-full;
+
+  .disabled {
+    @apply cursor-not-allowed;
+    @apply opacity-50;
+  }
 }
 
 .btn-primary {

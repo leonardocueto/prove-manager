@@ -1,14 +1,15 @@
 <template>
-  <datatable
+  <data-table
     v-model:filters="filters"
     :value="listProviders"
+    :loading="loadingTable"
+    :rows="10"
+    :rowsPerPageOptions="[10, 20, 30, 50]"
+    :globalFilterFields="['name', 'email', 'status']"
     tableStyle="min-width: 50rem"
     scrollHeight="min-height: 50rem"
     paginator
     removableSort
-    :rows="10"
-    :rowsPerPageOptions="[10, 20, 30, 50]"
-    :globalFilterFields="['name', 'email', 'status']"
   >
     <template #header>
       <nav class="flex items-center justify-between w-full">
@@ -20,7 +21,11 @@
             {{ $t("add provider") }}
           </app-button-add>
           <icon-field class="relative flex items-center w-64">
-            <icon-search size="20" class="absolute left-3 text-gray-500" />
+            <app-icon
+              icon="IconSearch"
+              size="small"
+              class="absolute left-3 text-gray-500"
+            />
             <input-text
               v-model="filters['global'].value"
               :placeholder="$t('search')"
@@ -31,29 +36,22 @@
       </nav>
     </template>
     <template #empty> {{ $t("providers not found") }} </template>
-    <template #loading> <skeleton></skeleton> </template>
+    <template #loading>
+      <app-icon class="animate-spin" icon="IconLoader2" size="large" />
+    </template>
     <column field="name" :header="$t('name')" sortable>
       <template #body="slotProps">
-        <skeleton v-if="loading"></skeleton>
-        <template v-else>
-          {{ slotProps.data.name }}
-        </template>
+        {{ slotProps.data.name }}
       </template>
     </column>
     <column field="email" :header="$t('mail')" sortable>
       <template #body="slotProps">
-        <skeleton v-if="loading"></skeleton>
-        <template v-else>
-          {{ slotProps.data.email }}
-        </template>
+        {{ slotProps.data.email }}
       </template>
     </column>
     <column field="status" :header="$t('status')" sortable>
       <template #body="slotProps">
-        <skeleton v-if="loading"></skeleton>
-        <template v-else>
-          <app-state :status="slotProps.data.status" />
-        </template>
+        <app-state :status="slotProps.data.status" />
       </template>
     </column>
     <column class="w-20 overflow-visible">
@@ -63,11 +61,11 @@
           class="rounded-full hover:bg-gray-50 p-2"
           @click="toggle"
         >
-          <component
-            :is="iconComponent"
-            :size="20"
+          <app-icon
+            icon="IconDotsVertical"
+            size="small"
             :color="hoverIcon ? 'black' : 'gray'"
-          />
+          ></app-icon>
         </button-p>
         <popover ref="op">
           <div class="flex flex-col gap-4">
@@ -80,7 +78,7 @@
                     class="flex gap-2 relative z-20"
                     @click="openModal({ id: slotProps.data.id })"
                   >
-                    <component :is="iconEdit" size="20" color="gray" />
+                    <app-icon icon="IconPencil" size="small" />
                     {{ $t("edit") }}
                   </div>
                 </li>
@@ -91,7 +89,7 @@
                     class="flex gap-2 relative z-20"
                     @click="deleteProvider(slotProps.data.id)"
                   >
-                    <component :is="iconDelete" size="20" color="gray" />
+                    <app-icon icon="IconTrash" size="small" />
                     {{ $t("delete") }}
                   </div>
                 </li>
@@ -102,7 +100,7 @@
                     class="flex gap-2 relative z-20"
                     @click="switchStatus(slotProps.data.id)"
                   >
-                    <component :is="iconReplace" size="20" color="gray" />
+                    <app-icon icon="IconReplace" size="small" color="gray" />
                     {{ $t("switch status") }}
                   </div>
                 </li>
@@ -112,8 +110,8 @@
         </popover>
       </template>
     </column>
-  </datatable>
-  <ptoast />
+  </data-table>
+
   <!--Create Provider Modal-->
   <app-fade-modal :isVisible="showModal">
     <div class="bg-white min-w-[500px] min-h-96 rounded-2xl p-6">
@@ -133,7 +131,10 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
-import TablerIcons from "@/assets/icons";
+import { IProvider } from "@/interface/provider.interface";
+import { AppButtonAdd, AppFadeModal, AppState, AppIcon } from "@/desingSistem";
+import ProviderForm from "@/components/Forms/ProviderForm.vue";
+
 import { FilterMatchMode } from "@primevue/core/api";
 import Popover from "primevue/popover";
 import DataTable from "primevue/datatable";
@@ -141,17 +142,14 @@ import Column from "primevue/column";
 import InputText from "primevue/inputtext";
 import IconField from "primevue/iconfield";
 import Button from "primevue/button";
-import Skeleton from "primevue/skeleton";
-import { IProvider } from "@/interface/provider.interface";
-import { AppButtonAdd, AppFadeModal, AppState } from "@/desingSistem";
-import ProviderForm from "@/components/Forms/ProviderForm.vue";
+
 import useProviders from "@/composables/useProviders";
-import Toast from "primevue/toast";
-const ptoast = Toast;
 
 const hoverIcon = ref(false);
 const op = ref();
 const showModal = ref<boolean>(false);
+const loadingTable = ref<boolean>(false);
+const loadingForm = ref<boolean>(false);
 
 const titleModal = ref("");
 const formValues = ref<IProvider>({
@@ -173,37 +171,30 @@ const {
   deleteProvider,
   getProviders,
   switchStatus,
-  loading,
-  isEdit,
 } = useProviders();
 
 const toggle = (event: MouseEvent) => {
   op.value.toggle(event);
 };
 
-const iconComponent = TablerIcons["IconDotsVertical"];
-const iconEdit = TablerIcons["IconPencil"];
-const iconDelete = TablerIcons["IconTrash"];
-const iconSearch = TablerIcons["IconSearch"];
-const iconReplace = TablerIcons["IconReplace"];
-
-const datatable = DataTable;
+// const datatable = DataTable;
 const column = Column;
 const inputText = InputText;
 const iconField = IconField;
-const skeleton = Skeleton;
 const buttonP = Button;
 const popover = Popover;
 
 const openModal = ({ id }: { id?: string | number }) => {
-  isEdit.value = id ? true : false;
-  isEdit.value == true
-    ? (titleModal.value = "edit provider")
-    : (titleModal.value = "add provider");
+  if (id) {
+    titleModal.value = "edit provider";
+    formValues.value = findProvider(id) as IProvider;
+  } else {
+    titleModal.value = "add provider";
+  }
 
-  if (id) formValues.value = findProvider(id) as IProvider;
   showModal.value = true;
 };
+
 const closeModal = () => {
   showModal.value = false;
   formValues.value = {
@@ -216,19 +207,30 @@ const closeModal = () => {
 };
 
 const onSubmit = async (value: IProvider) => {
-  isEdit.value ? await editProvider(value) : await addProvider(value);
-  closeModal();
+  try {
+    loadingForm.value = true;
+
+    if (value.id) {
+      await editProvider(value);
+    } else {
+      await addProvider(value);
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loadingForm.value = false;
+    closeModal();
+  }
 };
 
 onMounted(async () => {
   try {
-    loading.value = true;
-
+    loadingTable.value = true;
     await getProviders();
   } catch (error) {
     console.log(error);
   } finally {
-    loading.value = false;
+    loadingTable.value = false;
   }
 });
 </script>

@@ -1,10 +1,12 @@
 <template>
   <component :is="layout">
+    <toast />
     <router-view />
   </component>
 </template>
 
 <script lang="ts" setup>
+import Toast from "primevue/toast";
 import { computed, defineAsyncComponent } from "vue";
 import { useRoute } from "vue-router";
 
