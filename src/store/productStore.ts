@@ -3,6 +3,7 @@ import { reactive } from "vue";
 
 const productStore = reactive({
   products: [] as IProduct[],
+  isLoaded: false,
 });
 
 export { productStore };

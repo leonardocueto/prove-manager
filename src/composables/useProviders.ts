@@ -46,7 +46,7 @@ export default function () {
       const response = await axios.delete(`/contacts?id=${id}`);
       if (response.status >= 200 && response.status < 300) {
         providersStore.providers = providersStore.providers.filter(
-          (provider) => provider.id !== id
+          (provider: IProvider) => provider.id !== id
         );
         localStorage.setItem(
           "providers",
@@ -63,7 +63,7 @@ export default function () {
       const response = await axios.put(`/contacts/${provider.id}`, provider);
       if (response.status >= 200 && response.status < 300) {
         const index = providersStore.providers.findIndex(
-          (p) => p.id === provider.id
+          (p: IProvider) => p.id === provider.id
         );
         if (index !== -1) {
           providersStore.providers[index] = { ...provider };
