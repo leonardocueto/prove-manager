@@ -1,12 +1,14 @@
 <template>
   <component :is="layout">
     <toast />
+    <confirm-popup></confirm-popup>
     <router-view />
   </component>
 </template>
 
 <script lang="ts" setup>
 import Toast from "primevue/toast";
+import ConfirmPopup from "primevue/confirmpopup";
 import { computed, defineAsyncComponent } from "vue";
 import { useRoute } from "vue-router";
 

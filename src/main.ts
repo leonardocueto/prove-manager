@@ -8,7 +8,7 @@ import EN from "@/locale/en.json";
 import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
 import ToastService from "primevue/toastservice";
-
+import ConfirmationService from "primevue/confirmationservice";
 const i18n = createI18n({
   legacy: false,
   locale: localStorage.getItem("language") ?? "EN",
@@ -21,6 +21,7 @@ createApp(App)
   .use(router)
   .use(i18n)
   .use(ToastService)
+  .use(ConfirmationService)
   .use(PrimeVue, {
     theme: {
       preset: Aura,

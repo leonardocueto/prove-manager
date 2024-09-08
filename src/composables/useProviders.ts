@@ -18,7 +18,7 @@ export default function () {
   const addProvider = async (providerData: IProvider) => {
     try {
       const response = await axios.post("/contacts", providerData);
-      if (response.status == 200) getProviders();
+      if (response.status >= 200 && response.status < 300) getProviders();
     } catch (error) {
       throw new Error((error as Error).message || "Error to add provider");
     }
@@ -27,7 +27,7 @@ export default function () {
   const deleteProvider = async (id: string | number) => {
     try {
       const response = await axios.delete(`/contacts?id=${id}`);
-      if (response.status == 200) getProviders();
+      if (response.status >= 200 && response.status < 300) getProviders();
     } catch (error) {
       throw new Error((error as Error).message || "Error to delete provider");
     }
@@ -36,34 +36,9 @@ export default function () {
   const editProvider = async (provider: IProvider) => {
     try {
       const response = await axios.put(`/contacts/${provider.id}`, provider);
-      if (response.status == 200) getProviders();
+      if (response.status >= 200 && response.status < 300) getProviders();
     } catch (error) {
       throw new Error((error as Error).message || "Error to edit provider");
-    }
-  };
-
-  const switchStatus = async (id: string | number) => {
-    try {
-      const provider = findProvider(id);
-      if (!provider) {
-        console.log(`Provider with id ${id} not found.`);
-        return;
-      }
-      const updatedProvider = {
-        ...provider,
-        status: provider.status === "active" ? "inactive" : "active",
-      };
-      const response = await axios.put(`/contacts/${updatedProvider.id}`, {
-        ivaCondition: updatedProvider.ivaCondition,
-        name: updatedProvider.name,
-        email: updatedProvider.email,
-        status: updatedProvider.status,
-        type: updatedProvider.type,
-      });
-
-      if (response.status == 200) getProviders();
-    } catch (error) {
-      throw new Error((error as Error).message || "Error to update products");
     }
   };
 
@@ -84,6 +59,5 @@ export default function () {
     editProvider,
     findProvider,
     getProviders,
-    switchStatus,
   };
 }

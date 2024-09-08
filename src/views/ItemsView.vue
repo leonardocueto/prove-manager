@@ -57,7 +57,7 @@
       <template #body="slotProps">
         <skeleton v-if="loading"></skeleton>
         <template v-else>
-          <p>{{ slotProps.data.price[0].price }}</p>
+          <p>${{ slotProps.data.price[0].price }}</p>
         </template>
       </template>
     </column>
@@ -103,6 +103,7 @@
 
         <product-form
           :values="formValues"
+          :loading="loading"
           @close="closeModal"
           @submit="onSubmit"
         ></product-form>

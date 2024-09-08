@@ -85,23 +85,14 @@
                 <li
                   class="px-3 py-2 hover:bg-gray-100 cursor-pointer relative inline-block text-left rounded-md"
                 >
-                  <div
-                    class="flex gap-2 relative z-20"
-                    @click="deleteProvider(slotProps.data.id)"
-                  >
+                  <div class="flex gap-2 relative z-20">
                     <app-icon icon="IconTrash" size="small" />
-                    {{ $t("delete") }}
-                  </div>
-                </li>
-                <li
-                  class="px-3 py-2 hover:bg-gray-100 cursor-pointer relative inline-block text-left rounded-md"
-                >
-                  <div
-                    class="flex gap-2 relative z-20"
-                    @click="switchStatus(slotProps.data.id)"
-                  >
-                    <app-icon icon="IconReplace" size="small" color="gray" />
-                    {{ $t("switch status") }}
+                    <button-p
+                      outlined
+                      :label="$t('delete')"
+                      class="flex justify-start w-full"
+                      @click="confirmDelete($event, slotProps.data.id)"
+                    ></button-p>
                   </div>
                 </li>
               </ul>
@@ -147,17 +138,10 @@ import Button from "primevue/button";
 import useProviders from "@/composables/useProviders";
 import Alert from "@/utils/alert";
 
-const {
-  listProviders,
-  findProvider,
-  addProvider,
-  editProvider,
-  deleteProvider,
-  getProviders,
-  switchStatus,
-} = useProviders();
+const { listProviders, findProvider, addProvider, editProvider, getProviders } =
+  useProviders();
 
-const { alert } = Alert();
+const { alert, confirmDelete } = Alert();
 
 const buttonP = Button;
 

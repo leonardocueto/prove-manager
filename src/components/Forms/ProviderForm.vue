@@ -16,6 +16,10 @@
       icon="IconMail"
       placeholder="enter mail"
     />
+    <div class="flex flex-col mb-4 gap-2">
+      <p class="mb-1 font-bold">{{ $t("status") }}</p>
+      <toggle-switch v-model="checked" />
+    </div>
     <div class="flex gap-2">
       <app-button
         :loading="loading"
@@ -37,9 +41,16 @@
 </template>
 
 <script lang="ts" setup>
+import {
+  reactive,
+  defineEmits,
+  defineProps,
+  withDefaults,
+  computed,
+} from "vue";
 import { AppForm, AppButton, AppField } from "@/desingSistem";
-import { reactive, defineEmits, defineProps, withDefaults } from "vue";
 import { IProvider } from "@/interface/provider.interface";
+import ToggleSwitch from "primevue/toggleswitch";
 
 const props = withDefaults(
   defineProps<{
@@ -50,6 +61,13 @@ const props = withDefaults(
     loading: false,
   }
 );
+
+const checked = computed({
+  get: () => formValues.status === "active",
+  set: (val: boolean) => {
+    formValues.status = val ? "active" : "inactive";
+  },
+});
 
 const formValues = reactive({ ...props.values });
 
