@@ -4,22 +4,12 @@ import { computed } from "vue";
 import { IProvider } from "@/interface/provider.interface";
 
 export default function () {
-  const getProviders = async (forceUpdate = false) => {
-    if (!forceUpdate && providersStore.isLoaded) return;
-    const cachedProviders = localStorage.getItem("providers");
-
-    if (cachedProviders && !forceUpdate) {
-      providersStore.providers = JSON.parse(cachedProviders);
-      providersStore.isLoaded = true;
-      return;
-    }
+  const getProviders = async () => {
     try {
       const { data } = await axios.get(
         "/contacts?order_direction=ASC&type=provider"
       );
       providersStore.providers = data;
-      providersStore.isLoaded = true;
-      localStorage.setItem("providers", JSON.stringify(data));
     } catch (error) {
       throw new Error((error as Error).message || "Error to get providers");
     }
@@ -27,15 +17,8 @@ export default function () {
 
   const addProvider = async (providerData: IProvider) => {
     try {
-      const response = await axios.post("/contacts", providerData);
-      if (response.status >= 200 && response.status < 300) {
-        providersStore.providers.push(response.data);
-
-        localStorage.setItem(
-          "providers",
-          JSON.stringify(providersStore.providers)
-        );
-      }
+      const { data } = await axios.post("/contacts", providerData);
+      providersStore.providers.push(data);
     } catch (error) {
       throw new Error((error as Error).message || "Error to add provider");
     }
@@ -43,16 +26,10 @@ export default function () {
 
   const deleteProvider = async (id: string | number) => {
     try {
-      const response = await axios.delete(`/contacts?id=${id}`);
-      if (response.status >= 200 && response.status < 300) {
-        providersStore.providers = providersStore.providers.filter(
-          (provider: IProvider) => provider.id !== id
-        );
-        localStorage.setItem(
-          "providers",
-          JSON.stringify(providersStore.providers)
-        );
-      }
+      await axios.delete(`/contacts?id=${id}`);
+      providersStore.providers = providersStore.providers.filter(
+        (provider: IProvider) => provider.id !== id
+      );
     } catch (error) {
       throw new Error((error as Error).message || "Error to delete provider");
     }
@@ -60,18 +37,12 @@ export default function () {
 
   const editProvider = async (provider: IProvider) => {
     try {
-      const response = await axios.put(`/contacts/${provider.id}`, provider);
-      if (response.status >= 200 && response.status < 300) {
-        const index = providersStore.providers.findIndex(
-          (p: IProvider) => p.id === provider.id
-        );
-        if (index !== -1) {
-          providersStore.providers[index] = { ...provider };
-          localStorage.setItem(
-            "providers",
-            JSON.stringify(providersStore.providers)
-          );
-        }
+      await axios.put(`/contacts/${provider.id}`, provider);
+      const index = providersStore.providers.findIndex(
+        (p: IProvider) => p.id === provider.id
+      );
+      if (index !== -1) {
+        providersStore.providers[index] = { ...provider };
       }
     } catch (error) {
       throw new Error((error as Error).message || "Error to edit provider");
