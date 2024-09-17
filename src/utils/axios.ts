@@ -1,7 +1,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL = "https://api.alegra.com/api/v1";
-const alegraToken = "ca54b1e619021a649231";
+const alegraToken = "cdd0aa7f6bd82b3a5ff4";
 
 const setToken = (email: string) => {
   const base64Token = btoa(`${email}:${alegraToken}`);

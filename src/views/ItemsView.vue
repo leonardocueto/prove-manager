@@ -10,6 +10,7 @@
     :rows="10"
     :rowsPerPageOptions="[10, 20, 30, 50]"
     :globalFilterFields="['name', 'price', 'description']"
+    :loading="loading"
   >
     <template #header>
       <nav class="flex items-center justify-between w-full">
@@ -39,26 +40,17 @@
 
     <column field="name" :header="$t('name')" sortable>
       <template #body="slotProps">
-        <skeleton v-if="loading"></skeleton>
-        <template v-else>
-          {{ slotProps.data.name }}
-        </template>
+        {{ slotProps.data.name }}
       </template>
     </column>
     <column field="description" :header="$t('description')" sortable>
       <template #body="slotProps">
-        <skeleton v-if="loading"></skeleton>
-        <template v-else>
-          {{ slotProps.data.description }}
-        </template>
+        {{ slotProps.data.description }}
       </template>
     </column>
     <column field="price" :header="$t('price')" sortable>
       <template #body="slotProps">
-        <skeleton v-if="loading"></skeleton>
-        <template v-else>
-          <p>${{ slotProps.data.price[0].price }}</p>
-        </template>
+        <p>${{ slotProps.data.price[0].price }}</p>
       </template>
     </column>
     <column class="w-20 overflow-visible">
@@ -125,7 +117,6 @@ import Column from "primevue/column";
 import InputText from "primevue/inputtext";
 import IconField from "primevue/iconfield";
 import Button from "primevue/button";
-import Skeleton from "primevue/skeleton";
 
 import useProducts from "@/composables/useProducts";
 import Alert from "@/utils/alert";
@@ -134,7 +125,6 @@ const { getProduct, listProducts, addProduct, editProduct, findProduct } =
   useProducts();
 const { alert } = Alert();
 
-const skeleton = Skeleton;
 const buttonP = Button;
 
 const loading = ref<boolean>(false);

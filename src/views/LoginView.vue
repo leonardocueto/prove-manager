@@ -1,14 +1,14 @@
 <template>
-  <div class="flex justify-center items-center h-screen bg-bg-login-g">
-    <div class="flex p-6 shadow-lg w-3/6 rounded-2xl bg-white">
-      <div class="flex-1 bg-secondary rounded-xl relative overflow-hidden">
+  <main class="flex justify-center items-center h-screen bg-bg-login-g">
+    <article class="flex p-6 shadow-lg w-3/6 rounded-2xl bg-white">
+      <section class="flex-1 bg-secondary rounded-xl relative overflow-hidden">
         <img
           src="@/assets/login.png"
           alt="login"
           class="absolute right-0 top-1/2 transform -translate-y-1/2"
         />
-      </div>
-      <div class="flex-1 bg-white p-2 flex flex-col">
+      </section>
+      <section class="flex-1 bg-white p-2 flex flex-col">
         <div
           class="flex flex-col items-center justify-start gap-10 h-full px-4"
         >
@@ -70,9 +70,9 @@
             </p>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </section>
+    </article>
+  </main>
 </template>
 
 <script lang="ts" setup>
@@ -97,7 +97,7 @@ const { doLogin } = useAuth();
 
 const loading = ref(false);
 const form = ref({
-  username: "leocueto1999+10@gmail.com",
+  username: "leocueto1999+11@gmail.com",
   password: "1",
 });
 
