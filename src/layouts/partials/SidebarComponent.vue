@@ -51,7 +51,7 @@ const iconComponentMenu = computed(() =>
 
 const options = [
   { text: "dashboard", link: "dashboard", icon: "IconHome" },
-  { text: "providers", link: "providers", icon: "IconUser" },
+  { text: "clients", link: "clients", icon: "IconUser" },
   { text: "items", link: "items", icon: "IconClipboardList" },
 ];
 

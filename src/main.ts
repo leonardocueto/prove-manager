@@ -9,12 +9,14 @@ import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
 import ToastService from "primevue/toastservice";
 import ConfirmationService from "primevue/confirmationservice";
+import { getLanguage } from "./composables/useLanguage";
+
 const i18n = createI18n({
   legacy: false,
-  locale: localStorage.getItem("language") ?? "EN",
+  locale: getLanguage(),
   messages: {
-    ES: ES,
     EN: EN,
+    ES: ES,
   },
 });
 createApp(App)

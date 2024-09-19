@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import DashboardView from "../views/DashboardView.vue";
+import { getLanguage } from "@/composables/useLanguage";
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -19,8 +21,8 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: "/providers",
-    name: "providers",
+    path: "/clients",
+    name: "clients",
     component: () =>
       import(/* webpackChunkName: "providers" */ "../views/ProviderView.vue"),
     meta: {
@@ -44,6 +46,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  getLanguage();
   const token = localStorage.getItem("token-ac");
 
   //Private routes

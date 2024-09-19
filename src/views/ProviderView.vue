@@ -14,11 +14,11 @@
     <template #header>
       <nav class="flex items-center justify-between w-full">
         <h2 class="font-semibold text-xl text-gray-800">
-          {{ $t("list provider") }}
+          {{ $t("list client") }}
         </h2>
         <div class="flex items-center space-x-4">
           <app-button-add @click="openModal">
-            {{ $t("add provider") }}
+            {{ $t("add client") }}
           </app-button-add>
           <icon-field class="relative flex items-center w-64">
             <app-icon
@@ -35,7 +35,7 @@
         </div>
       </nav>
     </template>
-    <template #empty> {{ $t("providers not found") }} </template>
+    <template #empty> {{ $t("clients not found") }} </template>
     <template #loading>
       <app-icon class="animate-spin" icon="IconLoader2" size="large" />
     </template>
@@ -47,6 +47,11 @@
     <column field="email" :header="$t('mail')" sortable>
       <template #body="slotProps">
         {{ slotProps.data.email }}
+      </template>
+    </column>
+    <column field="type" :header="$t('type')" sortable>
+      <template #body="slotProps">
+        {{ $t(slotProps.data.type[0]) }}
       </template>
     </column>
     <column field="status" :header="$t('status')" sortable>
@@ -122,7 +127,7 @@
     <div class="bg-white min-w-28 min-h-12 rounded-2xl p-6">
       <div class="pb-4">
         <h3 class="font-semibold text-xl pb-4">
-          {{ "Do you want to delete a provider?" }}
+          {{ $t("do you want to delete a client?") }}
         </h3>
         <div class="flex gap-2">
           <app-button
@@ -189,12 +194,13 @@ const showModal = ref<boolean>(false);
 const showModalDelete = ref<boolean>(false);
 const loadingTable = ref<boolean>(false);
 const loadingForm = ref<boolean>(false);
-const titleModal = ref("");
+const deleteValue = ref<number | string>();
+const titleModal = ref<string>("");
 const formValues = ref<IProvider>({
   ivaCondition: "IVA_RESPONSABLE",
   name: "",
   email: "",
-  type: "provider",
+  type: "",
   status: "active",
 });
 const filters = ref({
@@ -207,10 +213,10 @@ const toggle = (event: MouseEvent) => {
 };
 const openModal = ({ id }: { id?: string | number }) => {
   if (id) {
-    titleModal.value = "edit provider";
+    titleModal.value = "edit client";
     formValues.value = findProvider(id) as IProvider;
   } else {
-    titleModal.value = "add provider";
+    titleModal.value = "add client";
   }
   showModal.value = true;
 };
@@ -251,8 +257,6 @@ const onSubmit = async (value: IProvider) => {
     closeModal();
   }
 };
-
-const deleteValue = ref<number | string>();
 
 const handleDelete = async ({ id }: { id?: string | number }) => {
   deleteValue.value = id;

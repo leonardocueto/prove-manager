@@ -59,7 +59,7 @@ const props = withDefaults(
   }
 );
 
-const formValues = reactive({ ...props.values });
+const formValues = reactive<Partial<IProduct>>(structuredClone(props.values));
 
 const emits = defineEmits<{
   (event: "submit", value: typeof formValues): void;

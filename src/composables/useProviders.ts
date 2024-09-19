@@ -6,9 +6,7 @@ import { IProvider } from "@/interface/provider.interface";
 export default function () {
   const getProviders = async () => {
     try {
-      const { data } = await axios.get(
-        "/contacts?order_direction=ASC&type=provider"
-      );
+      const { data } = await axios.get("/contacts?");
       providersStore.providers = data;
     } catch (error) {
       throw new Error((error as Error).message || "Error to get providers");

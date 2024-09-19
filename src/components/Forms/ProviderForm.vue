@@ -16,6 +16,13 @@
       icon="IconMail"
       placeholder="enter mail"
     />
+    <select
+      v-model="formValues.type"
+      class="w-full md:w-56 md:h-19 pl-10 py-1 px-2 rounded-lg border-2 text-base cursor-pointer"
+    >
+      <option value="provider">{{ $t("provider") }}</option>
+      <option value="client">{{ $t("client") }}</option>
+    </select>
     <div class="flex flex-col mb-4 gap-2">
       <p class="mb-1 font-bold">{{ $t("status") }}</p>
       <toggle-switch v-model="checked" />
@@ -69,7 +76,10 @@ const checked = computed({
   },
 });
 
-const formValues = reactive({ ...props.values });
+const formValues = reactive({
+  ...props.values,
+  type: props.values.type[0] || "provider",
+});
 
 const emits = defineEmits<{
   (event: "submit", value: typeof formValues): void;
