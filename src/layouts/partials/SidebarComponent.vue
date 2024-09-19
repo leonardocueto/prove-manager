@@ -21,7 +21,6 @@
           v-for="option in options"
           :key="option.text"
           :text="option.text"
-          :size="option.size"
           :link="option.link"
           :iconComponent="option.icon"
           :hide="showMenu"

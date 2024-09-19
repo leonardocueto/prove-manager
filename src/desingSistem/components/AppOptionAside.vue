@@ -3,8 +3,13 @@
     class="w-full px-2 hover:cursor-pointer hover:font-semibold"
     :class="hide ? 'justify-start' : ' justify-center'"
   >
-    <router-link :to="{ name: link }" class="flex gap-2 px-1">
-      <app-icon :icon="props.iconComponent" size="small" :color="active" />
+    <router-link :to="{ name: link }" class="flex gap-1 px-1">
+      <app-icon
+        :icon="props.iconComponent"
+        size="small"
+        :color="active"
+        class="pb-1"
+      />
       <transition>
         <p v-if="hide">{{ $t(`${text}`) }}</p>
       </transition>
@@ -19,7 +24,6 @@ const props = withDefaults(
   defineProps<{
     text: string;
     iconComponent?: string;
-
     hide: boolean;
     link: string;
   }>(),

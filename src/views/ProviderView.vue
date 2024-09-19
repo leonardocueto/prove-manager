@@ -73,17 +73,16 @@
               <ul class="list-none p-0 m-0 flex flex-col">
                 <li
                   class="px-3 py-2 hover:bg-gray-100 cursor-pointer relative inline-block text-left rounded-md"
+                  @click="openModal({ id: slotProps.data.id })"
                 >
-                  <div
-                    class="flex gap-2 relative z-20"
-                    @click="openModal({ id: slotProps.data.id })"
-                  >
+                  <div class="flex gap-2 relative z-20">
                     <app-icon icon="IconPencil" size="small" />
                     {{ $t("edit") }}
                   </div>
                 </li>
                 <li
                   class="px-3 py-2 hover:bg-gray-100 cursor-pointer relative inline-block text-left rounded-md"
+                  @click="handleDelete({ id: slotProps.data.id })"
                 >
                   <div class="flex gap-2 relative z-20">
                     <app-icon icon="IconTrash" size="small" />
@@ -91,7 +90,6 @@
                       outlined
                       :label="$t('delete')"
                       class="flex justify-start w-full"
-                      @click="confirmDelete($event, slotProps.data.id)"
                     ></button-p>
                   </div>
                 </li>
@@ -119,12 +117,46 @@
     </div>
   </app-fade-modal>
   <!---->
+  <!--Delete Provider Modal-->
+  <app-fade-modal :isVisible="showModalDelete">
+    <div class="bg-white min-w-28 min-h-12 rounded-2xl p-6">
+      <div class="pb-4">
+        <h3 class="font-semibold text-xl pb-4">
+          {{ "Do you want to delete a provider?" }}
+        </h3>
+        <div class="flex gap-2">
+          <app-button
+            :loading="loadingForm"
+            :disabled="loadingForm"
+            type="secondary"
+            @click="showModalDelete = false"
+            >{{ $t("cancel") }}</app-button
+          >
+          <app-button
+            :loading="loadingForm"
+            :disabled="loadingForm"
+            type="primary"
+            @click="onSubmitDelete(deleteValue)"
+          >
+            {{ $t("accept") }}
+          </app-button>
+        </div>
+      </div>
+    </div>
+  </app-fade-modal>
+  <!---->
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import { IProvider } from "@/interface/provider.interface";
-import { AppButtonAdd, AppFadeModal, AppState, AppIcon } from "@/desingSistem";
+import {
+  AppButtonAdd,
+  AppFadeModal,
+  AppState,
+  AppIcon,
+  AppButton,
+} from "@/desingSistem";
 import ProviderForm from "@/components/Forms/ProviderForm.vue";
 
 import { FilterMatchMode } from "@primevue/core/api";
@@ -138,16 +170,23 @@ import Button from "primevue/button";
 import useProviders from "@/composables/useProviders";
 import Alert from "@/utils/alert";
 
-const { listProviders, findProvider, addProvider, editProvider, getProviders } =
-  useProviders();
+const {
+  listProviders,
+  findProvider,
+  addProvider,
+  editProvider,
+  getProviders,
+  deleteProvider,
+} = useProviders();
 
-const { alert, confirmDelete } = Alert();
+const { alert } = Alert();
 
 const buttonP = Button;
 
 const hoverIcon = ref(false);
 const op = ref();
 const showModal = ref<boolean>(false);
+const showModalDelete = ref<boolean>(false);
 const loadingTable = ref<boolean>(false);
 const loadingForm = ref<boolean>(false);
 const titleModal = ref("");
@@ -210,6 +249,33 @@ const onSubmit = async (value: IProvider) => {
   } finally {
     loadingForm.value = false;
     closeModal();
+  }
+};
+
+const deleteValue = ref<number | string>();
+
+const handleDelete = async ({ id }: { id?: string | number }) => {
+  deleteValue.value = id;
+  showModalDelete.value = true;
+};
+const onSubmitDelete = async (value: string | number) => {
+  try {
+    loadingForm.value = true;
+    await deleteProvider(value);
+    alert({
+      severity: "success",
+      summary: "Success",
+      detail: "",
+    });
+  } catch (error) {
+    alert({
+      severity: "error",
+      summary: "Error",
+      detail: (error as Error).message,
+    });
+  } finally {
+    loadingForm.value = false;
+    showModalDelete.value = false;
   }
 };
 
