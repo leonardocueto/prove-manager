@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import "./index.css";
+import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
 import ES from "@/locale/es.json";
 import EN from "@/locale/en.json";
@@ -21,6 +22,7 @@ const i18n = createI18n({
 });
 createApp(App)
   .use(router)
+  .use(createPinia())
   .use(i18n)
   .use(ToastService)
   .use(ConfirmationService)

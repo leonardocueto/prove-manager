@@ -53,9 +53,10 @@ const options = [
   { text: "dashboard", link: "dashboard", icon: "IconHome" },
   { text: "clients", link: "clients", icon: "IconUser" },
   { text: "items", link: "items", icon: "IconClipboardList" },
+  { text: "invoice", link: "invoice", icon: "IconFileInvoice" },
 ];
 
-const showMenu = ref(true);
+const showMenu = ref(false);
 
 const toggleMenu = () => {
   showMenu.value = !showMenu.value;

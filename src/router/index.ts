@@ -38,6 +38,15 @@ const routes: Array<RouteRecordRaw> = [
       layout: "DefaultLayout",
     },
   },
+  {
+    path: "/invoice",
+    name: "invoice",
+    component: () =>
+      import(/* webpackChunkName: "items" */ "../views/invoiceView.vue"),
+    meta: {
+      layout: "DefaultLayout",
+    },
+  },
 ];
 
 const router = createRouter({

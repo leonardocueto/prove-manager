@@ -59,5 +59,12 @@
   "type": "Type",
   "client": "Client",
   "c": "Client",
-  "p": "Provider"
+  "p": "Provider",
+  "invoice": "Invoices",
+  "list invoices": "List of invoices",
+  "add invoice": "Add invoice",
+  "invoice not found": "Invoices not found",
+  "item": "Item",
+  "date": "Date",
+  "see more": "See more"
 }

@@ -59,5 +59,12 @@
   "type": "Tipo",
   "client": "Cliente",
   "c": "Cliente",
-  "p": "Proveedor"
+  "p": "Proveedor",
+  "invoice": "Facturas",
+  "list invoices": "Lista de facturas",
+  "add invoice": "Agregar Factura",
+  "invoice not found": "Facturas no encontradas",
+  "date": "Fecha",
+  "item": "Producto",
+  "see more": "Ver más"
 }

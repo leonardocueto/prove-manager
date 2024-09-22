@@ -14,7 +14,7 @@
       >
         <p v-if="text">{{ $t(`${text}`) }}</p>
         <app-icon
-          icon="IconDotsVertical"
+          icon="IconSettings"
           size="small"
           :color="hoverIcon ? 'black' : 'gray'"
         ></app-icon>

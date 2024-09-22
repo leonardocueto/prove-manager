@@ -20,7 +20,7 @@ const props = defineProps<{
   hide: boolean;
 }>();
 
-const tamaño = ref("15rem");
+const tamaño = ref("4rem");
 watch(
   () => props.hide,
   (newVal) => {
