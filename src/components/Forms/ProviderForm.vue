@@ -16,13 +16,10 @@
       icon="IconMail"
       placeholder="enter mail"
     />
-    <select
-      v-model="formValues.type"
-      class="w-full md:w-56 md:h-19 pl-10 py-1 px-2 rounded-lg border-2 text-base cursor-pointer"
-    >
-      <option value="provider">{{ $t("provider") }}</option>
-      <option value="client">{{ $t("client") }}</option>
-    </select>
+    <app-field-select
+      :options="optionsSelect"
+      :modelValue="formValues.type"
+    ></app-field-select>
     <div class="flex flex-col mb-4 gap-2">
       <p class="mb-1 font-bold">{{ $t("status") }}</p>
       <toggle-switch v-model="checked" />
@@ -55,7 +52,7 @@ import {
   withDefaults,
   computed,
 } from "vue";
-import { AppForm, AppButton, AppField } from "@/desingSistem";
+import { AppForm, AppButton, AppField, AppFieldSelect } from "@/desingSistem";
 import { IProvider } from "@/interface/provider.interface";
 import ToggleSwitch from "primevue/toggleswitch";
 
@@ -75,6 +72,11 @@ const checked = computed({
     formValues.status = val ? "active" : "inactive";
   },
 });
+
+const optionsSelect = [
+  { name: "provider", value: "provider" },
+  { name: "client", value: "client" },
+];
 
 const formValues = reactive({
   ...props.values,

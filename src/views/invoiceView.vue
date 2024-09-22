@@ -81,28 +81,6 @@
                     @click="openModal({ id: slotProps.data.id })"
                   >
                     <app-icon icon="IconSearch" size="small" />
-                    {{ $t("delete") }}
-                  </div>
-                </li>
-                <li
-                  class="px-3 py-2 hover:bg-gray-100 cursor-pointer relative inline-block text-left rounded-md"
-                >
-                  <div
-                    class="flex gap-2 relative z-20"
-                    @click="openModal({ id: slotProps.data.id })"
-                  >
-                    <app-icon icon="IconPencil" size="small" />
-                    {{ $t("edit") }}
-                  </div>
-                </li>
-                <li
-                  class="px-3 py-2 hover:bg-gray-100 cursor-pointer relative inline-block text-left rounded-md"
-                >
-                  <div
-                    class="flex gap-2 relative z-20"
-                    @click="openModal({ id: slotProps.data.id })"
-                  >
-                    <app-icon icon="IconSearch" size="small" />
                     {{ $t("see more") }}
                   </div>
                 </li>
@@ -113,10 +91,24 @@
       </template>
     </column>
   </data-table>
+  <!-- Create Invoice Modal-->
+  <app-fade-modal :isVisible="showModal">
+    <div class="bg-white min-w-[500px] min-h-96 rounded-2xl p-6">
+      <div class="pb-4">
+        <h1 class="font-bold text-2xl pb-4">{{ $t("add invoice") }}</h1>
+        <invoice-form
+          :values="formValues"
+          :loading="loading"
+          @close="closeModal"
+          @submit="onSubmit"
+        ></invoice-form>
+      </div>
+    </div>
+  </app-fade-modal>
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-
+import InvoiceForm from "@/components/Forms/InvoiceForm.vue";
 import { AppFadeModal, AppButtonAdd, AppIcon } from "@/desingSistem";
 
 import { FilterMatchMode } from "@primevue/core/api";
@@ -127,6 +119,7 @@ import InputText from "primevue/inputtext";
 import IconField from "primevue/iconfield";
 import Button from "primevue/button";
 import useInvoice from "@/composables/useInvoice";
+import { IInvoice } from "@/interface/invoice.interface";
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   client: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -139,13 +132,64 @@ const buttonP = Button;
 const op = ref();
 const hoverIcon = ref(false);
 const loading = ref<boolean>(false);
+const showModal = ref<boolean>(false);
+
+interface IFormValues {
+  status: string;
+  dueDate: string;
+  date: string;
+  client: { value: string | number | undefined; name: string }[];
+  item: { value: string | number | undefined; name: string }[];
+}
+const formValues = ref<IFormValues>({
+  status: "open",
+  dueDate: "",
+  date: "",
+  client: [],
+  item: [],
+});
+
 const toggle = (event: MouseEvent) => {
   op.value.toggle(event);
 };
 
 const { getInvoices, listInvoices } = useInvoice();
 const openModal = ({ id }: { id?: string | number }) => {
-  console.log(id);
+  showModal.value = true;
+};
+
+const onSubmit = async (value: IInvoice) => {
+  try {
+    loading.value = true;
+    console.log(value);
+    //await addInvoices(value);
+    // alert({
+    //   severity: "success",
+    //   summary: "Success",
+    //   detail: "",
+    // });
+  } catch (error) {
+    // alert({
+    //   severity: "error",
+    //   summary: "Error",
+    //   detail: (error as Error).message,
+    // });
+    console.log(error);
+  } finally {
+    loading.value = false;
+    closeModal();
+  }
+};
+
+const closeModal = () => {
+  showModal.value = false;
+  formValues.value = {
+    status: "open",
+    dueDate: "",
+    date: "",
+    client: [],
+    item: [],
+  };
 };
 
 onMounted(async () => {

@@ -227,7 +227,7 @@ const closeModal = () => {
     ivaCondition: "IVA_RESPONSABLE",
     name: "",
     email: "",
-    type: "provider",
+    type: "",
     status: "active",
   };
 };

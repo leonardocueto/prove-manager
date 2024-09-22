@@ -9,7 +9,7 @@
             size="medium"
             color="white"
             stroke-width="3"
-            class="rounded-lg cursor-pointer bg-gray-500 hover:bg-gray-400 p-1 ml-2"
+            class="rounded-lg cursor-pointer bg-gray-300 hover:bg-gray-400 p-1 ml-2"
             @click="toggleMenu"
           />
         </div>

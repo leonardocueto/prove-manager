@@ -21,6 +21,7 @@ import AppState from "./components/AppState.vue";
 import AppButtonAdd from "./components/AppButtonAdd.vue";
 import AppFadeModal from "./components/AppFadeModal.vue";
 import AppIcon from "./components/AppIcon.vue";
+import AppFieldSelect from "./components/AppFieldSelect.vue";
 
 export {
   IconMail,
@@ -46,4 +47,5 @@ export {
   AppButtonAdd,
   AppFadeModal,
   AppIcon,
+  AppFieldSelect,
 };
