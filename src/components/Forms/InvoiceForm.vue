@@ -34,14 +34,14 @@
     <section class="py-2">
       <h2>Item</h2>
       <app-field-select
-        :modelValue="formValues.items"
+        v-model="formValues.items"
         :options="itemsOptions"
       ></app-field-select>
     </section>
     <section class="py-2">
       <h2>status</h2>
       <app-field-select
-        :modelValue="formValues.status"
+        v-model="formValues.status"
         :options="statusOptions"
       ></app-field-select>
     </section>
