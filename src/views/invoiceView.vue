@@ -5,12 +5,12 @@
     tableStyle="min-width: 25rem"
     scrollHeight="height: 800px"
     class="min-h-8 max-h-[800px]"
-    paginator
-    removableSort
     :rows="10"
     :rowsPerPageOptions="[10, 20, 30, 50]"
     :globalFilterFields="['client', 'date', 'item']"
     :loading="loading"
+    removableSort
+    paginator
   >
     <template #header>
       <nav class="flex items-center justify-between w-full">
