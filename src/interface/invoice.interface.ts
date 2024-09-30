@@ -17,7 +17,7 @@ interface IInvoice {
   tax?: number;
   total?: number;
   totalPaid?: number;
-  balanc?: number;
+  balance?: number;
   decimalPrecision?: string;
   warehouse?: IWarehouse;
   term?: string;
@@ -25,7 +25,7 @@ interface IInvoice {
   saleConcept?: string | null;
   seller?: string | null;
   priceList?: IPriceList;
-  items?: IProduct[];
+  items: IProduct[];
   costCenter?: string | null;
   printingTemplate?: IPrintingTemplate;
 }
@@ -56,5 +56,13 @@ interface IPrintingTemplate {
   name: string;
   pageSize: string;
 }
+interface IFormValues {
+  status: string;
+  dueDate: string;
+  date: string;
+  quantity: number;
+  client: { value: string | number | undefined; name: string }[];
+  items: { value: string | number; name: string }[];
+}
 
-export { IInvoice };
+export { IInvoice, IFormValues };

@@ -65,6 +65,8 @@
   "add invoice": "Agregar Factura",
   "invoice not found": "Facturas no encontradas",
   "date": "Fecha",
+  "final date": "Fecha final",
   "item": "Producto",
-  "see more": "Ver más"
+  "see more": "Ver más",
+  "quantity": "Cantidad"
 }

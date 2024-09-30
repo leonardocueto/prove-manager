@@ -24,26 +24,40 @@
       icon="IconCalendarEvent"
       placeholder="2024-09-24"
     />
-    <section class="py-2">
-      <h2>Client</h2>
-      <app-field-select
-        :modelValue="formValues.client"
-        :options="providerOptions"
-      ></app-field-select>
+    <section class="flex gap-2 py-2">
+      <div class="w-full">
+        <h2 class="font-bold">Client</h2>
+        <app-field-select
+          v-model="formValues.client"
+          :options="providerOptions"
+        ></app-field-select>
+      </div>
+      <div class="w-full">
+        <h2 class="font-bold">Item</h2>
+        <app-field-select
+          v-model="formValues.items"
+          :options="itemsOptions"
+        ></app-field-select>
+      </div>
     </section>
-    <section class="py-2">
-      <h2>Item</h2>
-      <app-field-select
-        v-model="formValues.items"
-        :options="itemsOptions"
-      ></app-field-select>
-    </section>
-    <section class="py-2">
-      <h2>status</h2>
-      <app-field-select
-        v-model="formValues.status"
-        :options="statusOptions"
-      ></app-field-select>
+    <section class="flex w-full gap-2 py-2 justify-between">
+      <div class="w-full">
+        <app-field
+          v-model="formValues.quantity"
+          id="quantity"
+          label="quantity"
+          type="number"
+          icon="IconCalculator"
+          placeholder="12"
+        />
+      </div>
+      <div class="w-full">
+        <h2 class="font-bold">status</h2>
+        <app-field-select
+          v-model="formValues.status"
+          :options="statusOptions"
+        ></app-field-select>
+      </div>
     </section>
     <div class="flex gap-2">
       <app-button
@@ -67,7 +81,7 @@
 <script setup lang="ts">
 import { AppForm, AppButton, AppField, AppFieldSelect } from "@/desingSistem";
 import AppIcon from "@/desingSistem/components/AppIcon.vue";
-import { IInvoice } from "@/interface/invoice.interface";
+import { IFormValues } from "@/interface/invoice.interface";
 import {
   defineProps,
   withDefaults,
@@ -90,15 +104,10 @@ const providerOptions = ref<
 const itemsOptions = ref<
   { value: string | number | undefined; name: string }[]
 >([]);
-interface IFormValues {
-  status: string;
-  client: { value: string | number | undefined; name: string }[];
-  item: { value: string | number | undefined; name: string }[];
-}
 
 const props = withDefaults(
   defineProps<{
-    values: IInvoice;
+    values: IFormValues;
     loading?: boolean;
   }>(),
   {
@@ -115,8 +124,9 @@ const statusOptions = [
 const formValues = reactive<IFormValues>({
   ...props.values,
   status: props.values.status || "open",
-  client: providerOptions.value,
-  item: itemsOptions.value,
+  // client: providerOptions.value,
+  // items: itemsOptions.value,
+  // quantity: itemsOptions.value,
 });
 
 const emits = defineEmits<{

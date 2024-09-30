@@ -66,5 +66,7 @@
   "invoice not found": "Invoices not found",
   "item": "Item",
   "date": "Date",
-  "see more": "See more"
+  "final date": "Final date",
+  "see more": "See more",
+  "quantity": "Quantity"
 }

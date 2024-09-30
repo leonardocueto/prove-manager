@@ -3,7 +3,7 @@
     v-model:filters="filters"
     :value="listInvoices"
     tableStyle="min-width: 25rem"
-    scrollHeight="height: 800px"
+    scrollHeight="800px"
     class="min-h-8 max-h-[800px]"
     :rows="10"
     :rowsPerPageOptions="[10, 20, 30, 50]"
@@ -53,7 +53,7 @@
         {{ slotProps.data.date }}
       </template>
     </column>
-    <column field="date" :header="$t('price')" sortable>
+    <column field="price" :header="$t('price')" sortable>
       <template #body="slotProps"> ${{ slotProps.data.total }} </template>
     </column>
     <column class="w-20 overflow-visible">
@@ -110,6 +110,10 @@
 import { onMounted, ref } from "vue";
 import InvoiceForm from "@/components/Forms/InvoiceForm.vue";
 import { AppFadeModal, AppButtonAdd, AppIcon } from "@/desingSistem";
+import { IFormValues } from "@/interface/invoice.interface";
+
+import useProducts from "@/composables/useProducts";
+import useProviders from "@/composables/useProviders";
 
 import { FilterMatchMode } from "@primevue/core/api";
 import Popover from "primevue/popover";
@@ -119,7 +123,9 @@ import InputText from "primevue/inputtext";
 import IconField from "primevue/iconfield";
 import Button from "primevue/button";
 import useInvoice from "@/composables/useInvoice";
-import { IInvoice } from "@/interface/invoice.interface";
+import Alert from "@/utils/alert";
+
+const { alert } = Alert();
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   client: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -134,46 +140,60 @@ const hoverIcon = ref(false);
 const loading = ref<boolean>(false);
 const showModal = ref<boolean>(false);
 
-interface IFormValues {
-  status: string;
-  dueDate: string;
-  date: string;
-  client: { value: string | number | undefined; name: string }[];
-  item: { value: string | number | undefined; name: string }[];
-}
 const formValues = ref<IFormValues>({
   status: "open",
   dueDate: "",
   date: "",
   client: [],
-  item: [],
+  items: [],
+  quantity: 1,
 });
 
 const toggle = (event: MouseEvent) => {
   op.value.toggle(event);
 };
 
-const { getInvoices, listInvoices } = useInvoice();
+const { getInvoices, listInvoices, addInvoice } = useInvoice();
 const openModal = ({ id }: { id?: string | number }) => {
   showModal.value = true;
 };
 
-const onSubmit = async (value: IInvoice) => {
+const { findProduct } = useProducts();
+
+const onSubmit = async (value: IFormValues) => {
   try {
     loading.value = true;
     console.log(value);
-    //await addInvoices(value);
-    // alert({
-    //   severity: "success",
-    //   summary: "Success",
-    //   detail: "",
-    // });
+    const item = findProduct(value.items);
+    const newItem = [
+      {
+        id: item?.id,
+        name: item?.name,
+        price: item?.price[0].price,
+        quantity: value.quantity || 1,
+        description: item?.description,
+      },
+    ];
+    const newValue = {
+      client: { id: Number(value.client) },
+      status: value.status,
+      items: newItem,
+      date: value.date,
+      dueDate: value.dueDate,
+    };
+    console.log(newValue);
+    await addInvoice(newValue);
+    alert({
+      severity: "success",
+      summary: "Success",
+      detail: "",
+    });
   } catch (error) {
-    // alert({
-    //   severity: "error",
-    //   summary: "Error",
-    //   detail: (error as Error).message,
-    // });
+    alert({
+      severity: "error",
+      summary: "Error",
+      detail: (error as Error).message,
+    });
     console.log(error);
   } finally {
     loading.value = false;
@@ -188,7 +208,7 @@ const closeModal = () => {
     dueDate: "",
     date: "",
     client: [],
-    item: [],
+    items: [],
   };
 };
 

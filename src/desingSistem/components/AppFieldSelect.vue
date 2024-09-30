@@ -1,7 +1,7 @@
 <template>
   <select
     v-model="internalValue"
-    class="w-full md:w-56 md:h-19 pl-10 py-1 px-2 rounded-lg border-2 text-base cursor-pointer"
+    class="w-full md:h-19 pl-10 py-1 px-2 rounded-lg border-2 text-base cursor-pointer"
     @change="emitValue"
   >
     <option v-for="option in options" :key="option.value" :value="option.value">
