@@ -1,16 +1,12 @@
 <template>
-  <div class="flex max-h-screen overflow-hidden bg-third">
+  <div class="flex h-screen">
     <sidebar-component></sidebar-component>
-    <div class="w-full">
+
+    <div class="flex flex-col flex-1">
       <topbar-component />
-      <div class="h-full">
-        <div class="flex flex-col size-full bg-white">
-          <div class="flex flex-col border m-6 rounded-lg overflow-hidden">
-            <main class="min-w-full min-h-full">
-              <slot />
-            </main>
-          </div>
-        </div>
+
+      <div class="overflow-y-auto px-2 pt-2">
+        <slot />
       </div>
     </div>
   </div>
